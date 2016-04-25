@@ -1,0 +1,136 @@
+\section{Solution}
+\subsection{Core Language}
+
+\begin{frame}
+  \textit{Domains}.\\
+  K ::= <G, M, Q, S, $\Sigma$> \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Global Configurations \\
+  $\Sigma$ ::= |<id, v, h> | $\Sigma$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ Local Configurations \\
+  h ::= \{ true, false\}\\
+  I ::= \{$V_k \mapsto$ id \}\\
+\end{frame}
+
+\begin{frame}
+  M ::= \{id $\mapsto$ m\} \\
+  $m$ ::= $\bullet$ | e.$m$\\
+  S ::= \{$v_k$ $\mapsto$ \{true, false \} \}\\
+  Q ::= $\bullet$ | e.Q \\
+  \ \\
+  $v \  \in V$ \ \  set of vertices\\
+  $e \ \in E$ \ \ set of edges \\
+  id $\in \mathfrak{N}$ \\
+  k \ $\in \mathfrak{K}$ \ \ \ is finite
+  
+\end{frame}
+
+\begin{frame}
+    \textit{P} ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Program \\
+    \ \ \ \ \ \ \ \ \ | $\overline {\textbf{e}}$ \\
+\end{frame}
+
+\begin{frame}
+  e ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Expression \\
+  \ \ \ | \textbf{x}:= \textbf{e}   \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
+  \ \ \ | \textbf{m}  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Mutation \\
+  \ \ \ | \textbf{v}  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
+  \ \ \ | \textbf{x} \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Variable \\
+  \ \ \ | (\textbf{e} \textbf{e})   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair \\
+  \ \ \ |  $\textbf{let}$ $x$ $\textbf{=}$ e $\textbf{in}$ e  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Let binding \\
+  \ \ \ |  $\textbf{if}$ $x$ $\textbf{then}$ e $\textbf{else}$ e \ \ \ \ \ \ \ \ \ Conditional \\
+  \ \ \ |  $\textbf{sync}$ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \ \ \  Superstep barrier synchronization\\
+  \ \ \ |  $\textbf{send}$ x e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Send message e to vertex x \\
+  \ \ \ |  $\textbf{halt}$ \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vote to Halt \\
+\end{frame}
+
+\begin{frame}
+  m ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Mutation \\
+  \ \ \ | $\textbf{vertex\_insert}$ (e) \\
+  \ \ \ | $\textbf{vertex\_remove}$ (e) \\
+  \ \ \ | $\textbf{edge\_insert}$ ((e,e),e) \\
+  \ \ \ | $\textbf{vertex\_remove}$ ((e,e),e) \\
+\end{frame}
+
+\begin{frame}
+  v ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
+    \ \ \ | $\textbf{v},\textbf{v}$ \ \ \ \ \ \ \ \ \ \ \ \ pair value \\
+    \ \ \ | \textbf{i} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  integer \\
+    \ \ \ | \textbf{b} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ boolean \\
+\end{frame}
+
+\begin{frame}
+  T ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type \\
+    \ \ \ | \textbf{Vertex}(\textbf{id:Int}, \textbf{value:T}) \\
+    \ \ \ | \textbf{Edge}(\textbf{source:Vertex})(\textbf{dest:Vertex})(\textbf{value:T})\\
+    \ \ \ | $\textbf{T} \Rightarrow \textbf{T}$ \ \ \ \ \ \ \ \ \ \ Arrow type \\
+    \ \ \ | ($\textbf{T}, \textbf{T}$) \ \ \ \ \ \ \ \ \ \ \ Pair Type \\
+    \ \ \ | \textbf{Int} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer Type \\
+    \ \ \ | \textbf{Bool}\ \ \ \ \ \ \ \ \ \ \ \  Boolean Type
+\end{frame}
+
+\begin{frame}{Operational Semantics}
+Graph Topology Mutation (Global) \\
+  \begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[(Vertex Insert)]
+    {v \notin V}
+    {<G<V,E>, \epsilon[vertex\_insert(e).Q, M, S]> \\ \mapsto <G<V \cup e, E>,Q, M, S>}$$
+\end{mathpar}  
+
+  \begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[(Vertex Remove)]
+    {v\in V, E' = \{(v_j, v_k)\in E, v_j=v \lor v_k=v\}}
+    {<G<V,E>, \epsilon[vertex\_remove(E).Q, M, S]>\\ \mapsto <G<V \setminus v, E \setminus E'>,Q, M, S>}$$
+\end{mathpar}  
+
+
+\end{frame}
+
+\begin{frame}{Operational Semantics}
+Graph Topology Mutation (Global) \\
+ \begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[(Edge Insert)]
+    {V_j\in V, V_k\in V, E' = \{(v_j, v_k), i\}}
+    {<G<V,E>, \epsilon[edge\_insert((e_j, e_k), e_v).Q, M, S]>\\ \mapsto <G<V,  E \cap E'>,Q, M, S>}$$
+\end{mathpar} 
+
+ \begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[(Edge Remove)]
+    {V_j\in V, V_k\in V, E' = \{(v_j, v_k), i\}}
+    {<G<V,E>, \epsilon[edge\_remove((e_j, e_k)).Q, M, S]>\\ \mapsto <G<V,  E \setminus E'>,Q, M, S>}$$
+\end{mathpar} 
+\end{frame}
+
+\begin{frame}{Operational Semantics}
+Graph Topology Mutation (Local) \\
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule
+    { \ }
+    {<G,Q, M, S, \Sigma> \xrightarrow{m} <G, Q.(m), M, S, \Sigma>}$$
+\end{mathpar}
+\end{frame}
+
+\begin{frame}{Operational Semantics}
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[(Sync)]
+    {S^{'}(id)= true, \ h = false}
+    {<G,Q, M, S, \Sigma<id, v, h>> \xrightarrow{sync} <G, Q, M, S^{'}, \Sigma>}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[(Halt)]
+    {h = false}
+    {<G,Q, M, S, \Sigma<id, v, h>> \xrightarrow{halt} <G, Q, M, S, \Sigma<id, v, true>>}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[(Message Sending)]
+    {h = false \ \ \ m_0 = M(I(x)) \ \ \ m_1 = M_0.e \ \ \ M^{'}(I(x)) = m}
+    {<G,Q, M, S, \Sigma<id, v, h>> \xrightarrow{send(x.e)} <G, Q, M, S, \Sigma>}$$
+\end{mathpar}
+\end{frame}
