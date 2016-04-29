@@ -2,117 +2,130 @@
 \subsection{Core Language}
 
 \begin{frame}
-  \textit{Domains}.\\
-  K ::= <G, M, Q, S, $\Sigma$> \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Global Configurations \\
-  $\Sigma$ ::= |<id, v, h> | $\Sigma$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ Local Configurations \\
+\tiny{
+  K ::= <G, M, Q, S, $\Sigma$> $\hspace{23mm}$ Global Configurations \\
+  $\Sigma$ ::= $\bullet$ \ | $\Sigma$ ; <id, v, h>  $\hspace{23mm}$ Local Configurations \\
   h ::= \{ true, false\}\\
   I ::= \{$V_k \mapsto$ id \}\\
-\end{frame}
-
-\begin{frame}
+  \ \\
   M ::= \{id $\mapsto$ m\} \\
   $m$ ::= $\bullet$ | e.$m$\\
-  S ::= \{$v_k$ $\mapsto$ \{true, false \} \}\\
+  S ::= \{$v_k$ $\mapsto$ \{true, false\}\}\\
   Q ::= $\bullet$ | e.Q \\
   \ \\
   $v \  \in V$ \ \  set of vertices\\
   $e \ \in E$ \ \ set of edges \\
   id $\in \mathfrak{N}$ \\
   k \ $\in \mathfrak{K}$ \ \ \ is finite
-  
+}
 \end{frame}
 
 \begin{frame}
-    \textit{P} ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Program \\
-    \ \ \ \ \ \ \ \ \ | $\overline {\textbf{e}}$ \\
-\end{frame}
-
-\begin{frame}
-  e ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Expression \\
-  \ \ \ | \textbf{x}:= \textbf{e}   \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
-  \ \ \ | \textbf{m}  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Mutation \\
-  \ \ \ | \textbf{v}  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
-  \ \ \ | \textbf{x} \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Variable \\
-  \ \ \ | (\textbf{e} \textbf{e})   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair \\
-  \ \ \ |  $\textbf{let}$ $x$ $\textbf{=}$ e $\textbf{in}$ e  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Let binding \\
-  \ \ \ |  $\textbf{if}$ $x$ $\textbf{then}$ e $\textbf{else}$ e \ \ \ \ \ \ \ \ \ Conditional \\
-  \ \ \ |  $\textbf{sync}$ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \ \ \  Superstep barrier synchronization\\
-  \ \ \ |  $\textbf{send}$ x e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Send message e to vertex x \\
-  \ \ \ |  $\textbf{halt}$ \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vote to Halt \\
-\end{frame}
-
-\begin{frame}
-  m ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Mutation \\
-  \ \ \ | $\textbf{vertex\_insert}$ (e) \\
-  \ \ \ | $\textbf{vertex\_remove}$ (e) \\
-  \ \ \ | $\textbf{edge\_insert}$ ((e,e),e) \\
-  \ \ \ | $\textbf{vertex\_remove}$ ((e,e),e) \\
-\end{frame}
-
-\begin{frame}
+  \tiny{
+    \textit{P} ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Program \\
+    \ \ \ \  | $\overline {\textbf{e}}$ \\
+\ \\
+  e ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Expression \\
+  \ \ \ | \textbf{x} \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Variable \\
+  \ \ \ | \textbf{v}  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
+  \ \ \ | \textbf{x}:= \textbf{e}   \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Assignment \\
+  \ \ \ | (\textbf{e} \textbf{e})   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair \\
+  \ \ \ | $\lambda$\textbf{x}.\textbf{e}  \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Lambda \\
+  \ \ \ | \textbf{e} \textbf{e}   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Application \\
+  \ \ \ |  $\textbf{let}$ $x$ $\textbf{=}$ e $\textbf{in}$ e  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Let binding \\
+  \ \ \ |  $\textbf{if}$ $x$ $\textbf{then}$ e $\textbf{else}$ e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Conditional \\
+  \ \ \ |  \textbf{vInsert} e  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Insert \\
+  \ \ \ |  \textbf{vRemove} e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Remove \\
+  \ \ \ |  \textbf{eInsert} ((e e) e)  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Edge Insert \\
+  \ \ \ |  \textbf{eRemove} ((e e) e)   \ \ \ \ \ \ \ \ \ \ \ \ \ \ Edge Remove \\
+  \ \ \ |  $\textbf{sync}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \  Superstep barrier synchronization\\
+  \ \ \ |  $\textbf{send}$ x e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Send message e to vertex x \\
+  \ \ \ |  $\textbf{halt}$ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Vote to Halt \\
+\ \\
   v ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
-    \ \ \ | $\textbf{v},\textbf{v}$ \ \ \ \ \ \ \ \ \ \ \ \ pair value \\
-    \ \ \ | \textbf{i} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  integer \\
-    \ \ \ | \textbf{b} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ boolean \\
+    \ \ \ | $\textbf{v},\textbf{v}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair value \\
+    \ \ \ | \textbf{i} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer \\
+    \ \ \ | \textbf{b} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Boolean \\
+    \ \ \ | $\textbf{(x:T)} \Rightarrow e $ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  User Defined Function \\
+    }
 \end{frame}
 
 \begin{frame}
-  T ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type \\
-    \ \ \ | \textbf{Vertex}(\textbf{id:Int}, \textbf{value:T}) \\
-    \ \ \ | \textbf{Edge}(\textbf{source:Vertex})(\textbf{dest:Vertex})(\textbf{value:T})\\
-    \ \ \ | $\textbf{T} \Rightarrow \textbf{T}$ \ \ \ \ \ \ \ \ \ \ Arrow type \\
-    \ \ \ | ($\textbf{T}, \textbf{T}$) \ \ \ \ \ \ \ \ \ \ \ Pair Type \\
-    \ \ \ | \textbf{Int} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer Type \\
-    \ \ \ | \textbf{Bool}\ \ \ \ \ \ \ \ \ \ \ \  Boolean Type
+  \tiny{
+  T ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type \\
+    \ \ \ | \textbf{V}(\textbf{T}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Type \\
+    \ \ \ | \textbf{E}(\textbf{V(T)}), (\textbf{V(T)})\textbf{;T})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Edge Type\\
+    \ \ \ | $\textbf{T} \Rightarrow \textbf{T}$ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ Arrow type \\
+    \ \ \ | ($\textbf{T}, \textbf{T}$) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair Type \\
+    \ \ \ | \textbf{Int} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer Type \\
+    \ \ \ | \textbf{Bool}\ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Boolean Type
+}
+\end{frame}
+
+\subsection{Reduction Rules}
+\begin{frame}{Operational Semantics}
+Graph Topology Mutation (Global) \\
+\tiny{
+  \begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\scriptsize {(Vertex Insert)}]
+    {\ \ \ \ \ \ \ \ \ \ v \notin V, \{ \forall q^{'}: q^{'}  \in Q \ | \ priority(q) = e_2, priority(q^{'})\leq e_2\}}
+    {<G<V,E>, \epsilon[vInsert(e_1 / e_2)].Q, M, S>  \ \ \longrightarrow \ \ <G<V \cup e_1, E>,Q, M, S>}$$
+\end{mathpar}
+
+  \begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\scriptsize {(Vertex Remove)}]
+    {\ \ \ \ \  v\in V, E' = \{(v_j, v_k)\in E, v_j=v \lor v_k=v\},  \\ \{ \forall q^{'}: q^{'}  \in Q \ | \ priority(q) = e_2,  priority(q^{'})  \leq e_2\}}
+    {<G<V,E>, \epsilon[vRemove(e_1/e_2)].Q, M, S> \ \ \longrightarrow \ \ <G<V \setminus v, E \setminus E'>,Q, M, S>}$$
+\end{mathpar}
+}
 \end{frame}
 
 \begin{frame}{Operational Semantics}
 Graph Topology Mutation (Global) \\
-  \begin{mathpar}
+\tiny{
+ \begin{mathpar}
 $$\mprset{flushleft}
-  \inferrule[(Vertex Insert)]
-    {v \notin V}
-    {<G<V,E>, \epsilon[vertex\_insert(e).Q, M, S]> \\ \mapsto <G<V \cup e, E>,Q, M, S>}$$
-\end{mathpar}  
+  \inferrule[\scriptsize {(Edge Insert)}]
+    {\ \ \ \ \ \ \ \ \ \ V_j\in V, V_k\in V, E' = \{(v_j, v_k), i\}, \\ \{ \forall q^{'}: q^{'}  \in Q \ | \ priority(q) = e_4,  priority(q^{'})  \leq e_4\}}
+    {<G<V,E>, \epsilon[eInsert((e_1\ e_2)\ e_3)/e_4].Q, M, S> \ \ \longrightarrow \ \ <G<V,  E \cap E'>,Q, M, S>}$$
+\end{mathpar}
 
-  \begin{mathpar}
+ \begin{mathpar}
 $$\mprset{flushleft}
-  \inferrule[(Vertex Remove)]
-    {v\in V, E' = \{(v_j, v_k)\in E, v_j=v \lor v_k=v\}}
-    {<G<V,E>, \epsilon[vertex\_remove(E).Q, M, S]>\\ \mapsto <G<V \setminus v, E \setminus E'>,Q, M, S>}$$
-\end{mathpar}  
-
-
+  \inferrule[\scriptsize {(Edge Remove)}]
+    {\ \ \ \ \ \ \ \ \ \ V_j\in V, V_k\in V, E' = \{(v_j, v_k), i\}, \\ \{ \forall q^{'}: q^{'}  \in Q \ | \ priority(q) = e_4,  priority(q^{'})  \leq e_4\}}
+    {<G<V,E>, \epsilon[eRemove((e_1 \ e_2)\ e_3) /e_4].Q, M, S> \ \ \longrightarrow \ \ <G<V,  E \setminus E'>,Q, M, S>}$$
+\end{mathpar}
+}
 \end{frame}
 
 \begin{frame}{Operational Semantics}
-Graph Topology Mutation (Global) \\
- \begin{mathpar}
+  \tiny{
+  \begin{mathpar}
 $$\mprset{flushleft}
-  \inferrule[(Edge Insert)]
-    {V_j\in V, V_k\in V, E' = \{(v_j, v_k), i\}}
-    {<G<V,E>, \epsilon[edge\_insert((e_j, e_k), e_v).Q, M, S]>\\ \mapsto <G<V,  E \cap E'>,Q, M, S>}$$
-\end{mathpar} 
-
- \begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[(Edge Remove)]
-    {V_j\in V, V_k\in V, E' = \{(v_j, v_k), i\}}
-    {<G<V,E>, \epsilon[edge\_remove((e_j, e_k)).Q, M, S]>\\ \mapsto <G<V,  E \setminus E'>,Q, M, S>}$$
-\end{mathpar} 
+  \inferrule[\scriptsize {(Push Mutation)}]
+    {v \notin V, \{ \forall q^{'}: q^{'}  \in Q \ | \ priority(q) \leq priority(q^{'})\}}
+    {<G<V,E>, \epsilon[q].Q, M, S>  \longrightarrow <G<V, E>,Q.q, M, S>}$$
+\end{mathpar}
+}
 \end{frame}
 
 \begin{frame}{Operational Semantics}
 Graph Topology Mutation (Local) \\
+\tiny{
 \begin{mathpar}
 $$\mprset{flushleft}
   \inferrule
     { \ }
-    {<G,Q, M, S, \Sigma> \xrightarrow{m} <G, Q.(m), M, S, \Sigma>}$$
+    {<G,Q, M, S, \Sigma> \xrightarrow{m} <G, Q.m, M, S, \Sigma>}$$
 \end{mathpar}
+}
 \end{frame}
 
 \begin{frame}{Operational Semantics}
+\tiny{
 \begin{mathpar}
 $$\mprset{flushleft}
   \inferrule[(Sync)]
@@ -133,4 +146,175 @@ $$\mprset{flushleft}
     {h = false \ \ \ m_0 = M(I(x)) \ \ \ m_1 = M_0.e \ \ \ M^{'}(I(x)) = m}
     {<G,Q, M, S, \Sigma<id, v, h>> \xrightarrow{send(x.e)} <G, Q, M, S, \Sigma>}$$
 \end{mathpar}
+}
+\end{frame}
+
+\subsection{Typing Rule}
+\begin{frame}{T-VAR, T-ABS, T-APP}
+  \tiny{
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule
+    {x:T \in \Gamma}
+    {\Gamma \vdash \textbf{x}:T}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule
+    {\Gamma, x:T_1 \vdash t:T_2}
+    {\Gamma \vdash (x:T_1) \Rightarrow \textbf{t}:T_1 \Rightarrow T_2}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule
+    {\Gamma \vdash t_1:T_1 \Rightarrow T_2 \ \ \ \Gamma \vdash t_2:T_1}
+    {\Gamma \vdash t_1t_2:T_2}$$
+\end{mathpar}
+}
+\end{frame}
+
+\begin{frame}{T-ASS, T-LET}
+\tiny{
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule
+    {\Gamma \vdash x:T_1 \vdash e:T_2 }
+    {\Gamma \vdash (x:T_1.e):T_1 \Rightarrow T_2}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule
+    {\Gamma \vdash t_1:T_1 \ \ \ \Gamma,x:T_1 \vdash t_2:T_2}
+    {\Gamma \vdash let \ \ x=t_1 \ in \ \ t_2:T_2}$$
+\end{mathpar}
+}
+\end{frame}
+
+\begin{frame}{T-TRUE, T-FALSE, T-IF}
+\tiny{
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule
+    {\ \ \ \ }
+    {\Gamma \vdash true \in Bool}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule
+    {\ \ \ \ }
+    {\Gamma \vdash false \in Bool}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule
+    {\Gamma \vdash t_1 \in Bool  \ \ \ \Gamma \vdash t_2 \in T \ \ \ \Gamma \vdash t_3 \in T }
+    {\Gamma \vdash if \ \ t_1 \ \ then \ \ t_2 \ \ else \ \ t_3}$$
+\end{mathpar}
+}
+\end{frame}
+
+\section{Solution}
+\subsection{Core Language}
+
+\begin{frame}
+\tiny{
+  K ::= <G, M, Q, S, $\Sigma$> $\hspace{23mm}$ Global Configurations \\
+  $\Sigma$ ::= $\bullet$ \ | $\Sigma$ ; <id, v, h>  $\hspace{23mm}$ Local Configurations \\
+  h ::= \{ true, false\}\\
+  I ::= \{$V_k \mapsto$ id \}\\
+  \ \\
+  M ::= \{id $\mapsto$ m\} \\
+  $m$ ::= $\bullet$ | e.$m$\\
+  S ::= \{$v_k$ $\mapsto$ \{true, false\}\}\\
+  Q ::= $\bullet$ | e.Q \\
+  \ \\
+  $v \  \in V$ \ \  set of vertices\\
+  $e \ \in E$ \ \ set of edges \\
+  id $\in \mathfrak{N}$ \\
+  k \ $\in \mathfrak{K}$ \ \ \ is finite
+}
+\end{frame}
+
+\begin{frame}
+  \tiny{
+    \textit{P} ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Program \\
+    \ \ \ \  | $\overline {\textbf{e}}$ \\
+\ \\
+  e ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Expression \\
+  \ \ \ | \textbf{x} \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Variable \\
+  \ \ \ | \textbf{v}  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
+  \ \ \ | \textbf{x}:= \textbf{e}   \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Assignment \\
+  \ \ \ | (\textbf{e} \textbf{e})   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair \\
+  \ \ \ | $\lambda$\textbf{x}.\textbf{e}  \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Lambda \\
+  \ \ \ | \textbf{e} \textbf{e}   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Application \\
+  \ \ \ |  $\textbf{let}$ $x$ $\textbf{=}$ e $\textbf{in}$ e  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Let binding \\
+  \ \ \ |  $\textbf{if}$ $x$ $\textbf{then}$ e $\textbf{else}$ e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Conditional \\
+  \ \ \ |  \textbf{vInsert} e  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Insert \\
+  \ \ \ |  \textbf{vRemove} e  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Remove \\
+  \ \ \ |  \textbf{eInsert} ((e e) e)  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Edge Insert \\
+  \ \ \ |  \textbf{eRemove} ((e e) e) \ \ \ \ \ \ \ \ \ \ \ \ \ Edge Remove \\
+  \ \ \ |  $\textbf{sync}$ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ Superstep barrier synchronization\\
+  \ \ \ |  $\textbf{send}$ x e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Send message e to vertex x \\
+  \ \ \ |  $\textbf{halt}$ \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vote to Halt \\
+\ \\
+  v ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
+    \ \ \ | $\textbf{v},\textbf{v}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair value \\
+    \ \ \ | \textbf{i} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer \\
+    \ \ \ | \textbf{b} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Boolean \\
+    \ \ \ | $\textbf{(x:T)} \Rightarrow e $ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  User Defined Function \\
+    }
+\end{frame}
+
+\begin{frame}
+  \tiny{
+  T ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type \\
+    \ \ \ | \textbf{V}(\textbf{T}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Type \\
+    \ \ \ | \textbf{E}(\textbf{V(T)}), (\textbf{V(T)})\textbf{;T})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Edge Type\\
+    \ \ \ | $\textbf{T} \Rightarrow \textbf{T}$ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ Arrow type \\
+    \ \ \ | ($\textbf{T}, \textbf{T}$) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair Type \\
+    \ \ \ | \textbf{Int} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer Type \\
+    \ \ \ | \textbf{Bool}\ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Boolean Type
+}
+\end{frame}
+
+\subsection{Reduction Rules}
+\begin{frame}{Local}
+  \tiny{
+  \begin{mathpar}
+$$\mprset{flushleft}
+    \inferrule[\scriptsize {(Activate True)}]
+    {\ \ \ \ \ \ \ \ \ \ Q = \bullet \ , \ M(id) = \bullet}
+    {<G, M, Q, S, L_V, L_E, \Sigma <id, v, h>> \ \ \xrightarrow{activate} \ \ <G, M, Q, S, L_V, L_E, \Sigma <id, v, true>>}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\scriptsize {(Activate False)}]
+  {\ \ \ \ \ \ \ \ \ \ Q = \bullet \ , \ M(id) \neq \bullet  }
+  {<G, M, Q, S, L_V, L_E, \Sigma <id, v, h>>  \ \ \xrightarrow{deactivate} \ \ <G, M, Q, S, L_V, L_E, \Sigma <id, v, false>>}$$
+\end{mathpar}
+}
+\end{frame}
+
+\begin{frame}{Global}
+  \tiny{
+  \begin{mathpar}
+$$\mprset{flushleft}
+    \inferrule[\scriptsize {(Lock Reset)}]
+    {\ \ \ \ \ \ \ \ \ \ Q = \bullet \ , \ M(id) = \bullet}
+    {<G, M, Q, S, L_V, L_E, \Sigma <id, v, h>>  \ \ \xrightarrow{reset} \ \ <G, M, Q, S, \phi, \phi, \Sigma <id, v, true>>}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+\inferrule[\scriptsize {(Lock)}]
+  { edges(id) = E^{'}, \ V^{'}=\{ \forall v^{'}_k \ | \ (v_j, v_k) \in E^{'} \}}
+  {<G, M, Q, S, L_V, L_E, \Sigma <id, v, false>> \ \  \xrightarrow{lock} \ \  <G, M, Q, S, L_V \cup V^{'}, L_E \cup E^{'}, \Sigma <id, v, false>>}$$
+\end{mathpar}
+}
 \end{frame}
