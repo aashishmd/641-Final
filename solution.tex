@@ -3,295 +3,8 @@
 
 \begin{frame}
 \tiny{
-  K ::= <G, M, Q, S, $\Sigma$> $\hspace{23mm}$ Global Configurations \\
-  $\Sigma$ ::= $\bullet$ \ | $\Sigma$ ; <id, v, h>  $\hspace{23mm}$ Local Configurations \\
-  h ::= \{ true, false\}\\
-  I ::= \{$V_k \mapsto$ id \}\\
-  \ \\
-  M ::= \{id $\mapsto$ m\} \\
-  $m$ ::= $\bullet$ | e.$m$\\
-  S ::= \{$v_k$ $\mapsto$ \{true, false\}\}\\
-  Q ::= $\bullet$ | e.Q \\
-  \ \\
-  $v \  \in V$ \ \  set of vertices\\
-  $e \ \in E$ \ \ set of edges \\
-  id $\in \mathfrak{N}$ \\
-  k \ $\in \mathfrak{K}$ \ \ \ is finite
-}
-\end{frame}
-
-\begin{frame}
-  \tiny{
-    \textit{P} ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Program \\
-    \ \ \ \  | $\overline {\textbf{e}}$ \\
-\ \\
-  e ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Expression \\
-  \ \ \ | \textbf{x} \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Variable \\
-  \ \ \ | \textbf{v}  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
-  \ \ \ | \textbf{x}:= \textbf{e}   \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Assignment \\
-  \ \ \ | (\textbf{e} \textbf{e})   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair \\
-  \ \ \ | $\lambda$\textbf{x}.\textbf{e}  \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Lambda \\
-  \ \ \ | \textbf{e} \textbf{e}   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Application \\
-  \ \ \ |  $\textbf{if}$ $x$ $\textbf{then}$ e $\textbf{else}$ e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Conditional \\
-  \ \ \ |  $\textbf{while}$ $e$ $\textbf{do}$ e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ While \\
-  \ \ \ |  \textbf{vInsert} (e,e)  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Insert \\
-  \ \ \ |  \textbf{vRemove} e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Remove \\
-  \ \ \ |  \textbf{eInsert} ((e e) e)  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Edge Insert \\
-  \ \ \ |  \textbf{eRemove} ((e e) e)   \ \ \ \ \ \ \ \ \ \ \ \ \ \ Edge Remove \\
-  \ \ \ |  $\textbf{sync}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \  Superstep barrier synchronization\\
-  \ \ \ |  $\textbf{send}$ x e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Send message e to vertex x \\
-  \ \ \ |  $\textbf{halt}$ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Vote to Halt \\
-\ \\
-  v ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
-    \ \ \ | $\textbf{v},\textbf{v}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair value \\
-    \ \ \ | \textbf{i} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer \\
-    \ \ \ | \textbf{b} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Boolean \\
-    \ \ \ | $\textbf{(x:T)} \Rightarrow e $ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  User Defined Function \\
-    }
-\end{frame}
-
-\begin{frame}
-  \tiny{
-  T ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type \\
-    \ \ \ | \textbf{V}(\textbf{T}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Type \\
-    \ \ \ | \textbf{E}(\textbf{V(T)}), (\textbf{V(T)})\textbf{;T})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Edge Type\\
-    \ \ \ | $\textbf{T} \Rightarrow \textbf{T}$ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ Arrow type \\
-    \ \ \ | ($\textbf{T}, \textbf{T}$) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair Type \\
-    \ \ \ | \textbf{Int} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer Type \\
-    \ \ \ | \textbf{Bool}\ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Boolean Type
-}
-\end{frame}
-
-\subsection{Reduction Rules}
-\begin{frame}{Operational Semantics}
-Graph Topology Mutation (Global) \\
-\tiny{
-  \begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\scriptsize {(Vertex Insert)}]
-    {\ \ \ \ \ \ \ \ \ \ v \notin V, \{ \forall q^{'}: q^{'}  \in Q \ | \ priority(q) = e_2, priority(q^{'})\leq e_2\}}
-    {<G<V,E>, \epsilon[vInsert(e_1 / e_2)].Q, M, S>  \ \ \longrightarrow \ \ <G<V \cup e_1, E>,Q, M, S>}$$
-\end{mathpar}
-
-  \begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\scriptsize {(Vertex Remove)}]
-    {\ \ \ \ \  v\in V, E' = \{(v_j, v_k)\in E, v_j=v \lor v_k=v\},  \\ \{ \forall q^{'}: q^{'}  \in Q \ | \ priority(q) = e_2,  priority(q^{'})  \leq e_2\}}
-    {<G<V,E>, \epsilon[vRemove(e_1/e_2)].Q, M, S> \ \ \longrightarrow \ \ <G<V \setminus v, E \setminus E'>,Q, M, S>}$$
-\end{mathpar}
-}
-\end{frame}
-
-\begin{frame}{Operational Semantics}
-Graph Topology Mutation (Global) \\
-\tiny{
- \begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\scriptsize {(Edge Insert)}]
-    {\ \ \ \ \ \ \ \ \ \ V_j\in V, V_k\in V, E' = \{(v_j, v_k), i\}, \\ \{ \forall q^{'}: q^{'}  \in Q \ | \ priority(q) = e_4,  priority(q^{'})  \leq e_4\}}
-    {<G<V,E>, \epsilon[eInsert((e_1\ e_2)\ e_3)/e_4].Q, M, S> \ \ \longrightarrow \ \ <G<V,  E \cap E'>,Q, M, S>}$$
-\end{mathpar}
-
- \begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\scriptsize {(Edge Remove)}]
-    {\ \ \ \ \ \ \ \ \ \ V_j\in V, V_k\in V, E' = \{(v_j, v_k), i\}, \\ \{ \forall q^{'}: q^{'}  \in Q \ | \ priority(q) = e_4,  priority(q^{'})  \leq e_4\}}
-    {<G<V,E>, \epsilon[eRemove((e_1 \ e_2)\ e_3) /e_4].Q, M, S> \ \ \longrightarrow \ \ <G<V,  E \setminus E'>,Q, M, S>}$$
-\end{mathpar}
-}
-\end{frame}
-
-\begin{frame}{Operational Semantics}
-  \tiny{
-  \begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\scriptsize {(Push Mutation)}]
-    {v \notin V, \{ \forall q^{'}: q^{'}  \in Q \ | \ priority(q) \leq priority(q^{'})\}}
-    {<G<V,E>, \epsilon[q].Q, M, S>  \longrightarrow <G<V, E>,Q.q, M, S>}$$
-\end{mathpar}
-}
-\end{frame}
-
-\begin{frame}{Operational Semantics}
-Graph Topology Mutation (Local) \\
-\tiny{
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule
-    { \ }
-    {<G,Q, M, S, \Sigma> \xrightarrow{m} <G, Q.m, M, S, \Sigma>}$$
-\end{mathpar}
-}
-\end{frame}
-
-\begin{frame}{Operational Semantics}
-\tiny{
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[(Sync)]
-    {S^{'}(id)= true, \ h = false}
-    {<G,Q, M, S, \Sigma<id, v, h>> \xrightarrow{sync} <G, Q, M, S^{'}, \Sigma>}$$
-\end{mathpar}
-
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[(Halt)]
-    {h = false}
-    {<G,Q, M, S, \Sigma<id, v, h>> \xrightarrow{halt} <G, Q, M, S, \Sigma<id, v, true>>}$$
-\end{mathpar}
-
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[(Message Sending)]
-    {h = false \ \ \ m_0 = M(I(x)) \ \ \ m_1 = M_0.e \ \ \ M^{'}(I(x)) = m}
-    {<G,Q, M, S, \Sigma<id, v, h>> \xrightarrow{send(x.e)} <G, Q, M, S, \Sigma>}$$
-\end{mathpar}
-}
-\end{frame}
-
-\subsection{Typing Rule}
-\begin{frame}
-  \tiny{
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {(Variable)}]
-    {\Lambda \vdash X:(T, \Lambda)}
-    {\Gamma, \Lambda \vdash \textbf{X}:T,\Lambda}$$
-\end{mathpar}
-
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {(Value)}]
-    {\ \ }
-    {\Gamma, \Lambda  \vdash V:V}$$
-\end{mathpar}
-
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {(Assignment)}]
-    {\Lambda \vdash X:Td_1 \\\\  \Lambda \vdash e:Td_2 \\ \\ \Lambda^{'} \vdash X:T,d_2}
-    {\Gamma, \Lambda \vdash x::e : T \Lambda^{'}}$$
-\end{mathpar}
-}
-\end{frame}
-
-\begin{frame}
-\tiny{
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {(Conditional)}]
-    {\Gamma \vdash e_2 \ T \Lambda^{'} \\ \\ \\   \Gamma \vdash e_1 \ boolean \ \Lambda \\\\ \Gamma \vdash e_3 \ T \ \Lambda^{''}}
-    {\Gamma, \Lambda \vdash if \ e_1 \ e_2 \ e_3: \ T, \Lambda^{'} \uplus \Lambda^{"}}$$
-\end{mathpar}
-
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {(While)}]
-    {\Gamma \vdash e_1 \ \  boolean \ \Lambda \\\\ \Gamma \vdash e_2 \ T \ \Lambda^{'}}
-    {\Gamma \Lambda \vdash while \ \ e_1 \ \ e_2 \ : \ T, \Lambda^{'}}$$
-\end{mathpar}
-
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {(Lambda)}]
-    {\Lambda \vdash X \ : \ T_1 \ \Lambda^{'} \\ \\  \Lambda^{'}  \vdash e_1 \ : \ e_1 \rightarrow T_2 \ \Lambda^{'}}
-    {\Gamma \Lambda \vdash  \lambda Xe_1 \ : \ (T_1 \rightarrow T_2, \ \Lambda^{''})}$$
-\end{mathpar}
-}
-\end{frame}
-
-\begin{frame}
-\tiny{
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {(Application)}]
-    {\Lambda \vdash e_2 \ : \ T_1, \Lambda^{'} \\ \\  \Lambda^{'} \vdash e_1 \ : \ T_1 \rightarrow T_2}
-    {\Gamma, \Lambda \vdash \ e_1 \ e_2 \ : \ (T_2\Lambda^{''})}$$
-\end{mathpar}
-
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {(Vertex Insert)}]
-    {\Gamma, \Lambda \vdash e_1 \ : \  V(T), \ \Lambda^{'} \\ \\ \Lambda^{'}/\Lambda \neq \phi \\\\
-    \Gamma, \Lambda \vdash e_2 \ : \  T, \ \Lambda^{"}}
-    {\Gamma \Lambda \vdash vInsert \ \ (e_1 \ \ e_2) \ :\ \Lambda^{'}/\Lambda, \ Lambda^{"}}$$
-\end{mathpar}
-
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {(Vertex Remove)}]
-    {\Gamma, \Lambda \vdash e \ : \ Int, \Lambda^{'}}
-    {\Gamma, \Lambda \vdash \ vRemove \ e \ : \ \Lambda^{'}/\Lambda}$$
-\end{mathpar}
-}
-\end{frame}
-
-\begin{frame}
-  \tiny{
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {(Edge Insert)}]
-    {\Gamma, \Lambda \vdash e \ : \ (V(T).V(T), T^{'}), \Lambda^{'}}
-    {\Gamma, \Lambda \vdash \ eInsert \ e \ : \ \Lambda^{'}/\Lambda, \Lambda^{'}}$$
-\end{mathpar}
-
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {(Edge Remove)}]
-    {\Gamma, \Lambda \vdash e \ : \ E \ (V(T).V(T), T^{'}), \Lambda^{'}}
-    {\Gamma, \Lambda \vdash \ eRemove \ e \ : \ T, \ \Lambda}$$
-\end{mathpar}
-
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {()}]
-    {\Lambda \vdash e_1 \ Int,\ \Lambda^{'} \\\\ \Lambda^{'} \vdash e_2 \ : \ T \ \Lambda^{"}}
-    {\Lambda \vdash \ send \ e_1 \ e_2 \ : \ boolean, \ \Lambda^{"}}$$
-\end{mathpar}
-}
-\end{frame}
-
-\begin{frame}
-  \tiny{
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {()}]
-    {\forall \lambda, \lambda \in \Lambda \ \ \lambda \ is \ a \ value}
-    {value(\Lambda)\ = \ Int}$$
-\end{mathpar}
-
-\begin{mathpar}
-$$\mprset{flushleft}
-  \inferrule[\tiny {()}]
-    {\exists \lambda, \lambda \in \Lambda \ \ \lambda \ is \ not \ a \ value}
-    {value(\Lambda)\ = \ ?}$$
-\end{mathpar}
-}
-\end{frame}
-
-
-\begin{frame}
-  \tiny{
-\begin{mathpar}
-
-$$\mprset{flushleft}
-  \inferrule[\tiny {()}]
-     {\vdash eInsert \ e \ e \ : \Lambda,\ a \ = \ value(\Lambda);\ Int \\ \\ a \neq b \\\\
-      \vdash eRemove (e) \ : \Lambda^{'},\ a \ = \ value(\Lambda^{'});\ Int \\\\
-      \\ \\ \\ \\ \\ \bigvee \\\\
-      \vdash vRemove \ e \ : \ \Lambda, \ a \ = \ value(\Lambda)\ : \ Int \\ \ \  a \neq b \\\\
-      \vdash vInsert \ e \ : \Lambda^{'}, \ b \ = \ value(\Lambda^{'})\ : \ Int}
-    {\Lambda \ \# \ \Lambda^{'}}$$
-\end{mathpar}
-}
-\end{frame}
-\section{Solution}
-\subsection{Core Language}
-
-\begin{frame}
-\tiny{
-  K ::= <G, M, Q, S, $\Sigma$> $\hspace{23mm}$ Global Configurations \\
-  $\Sigma$ ::= $\bullet$ \ | $\Sigma$ ; <id, v, h>  $\hspace{23mm}$ Local Configurations \\
+  K ::= <G, M, Q, S, $L_v$, $L_e$, $\Sigma$> $\hspace{23mm}$ Global Configurations \\
+  $\Sigma$ ::= $\bullet$ \ | $\Sigma$ ; <id, v, h>  $\hspace{30mm}$ Local Configurations \\
   h ::= \{ true, false\}\\
   I ::= \{$V_k \mapsto$ id \}\\
   \ \\
@@ -319,15 +32,14 @@ $$\mprset{flushleft}
   \ \ \ | (\textbf{e} \textbf{e})   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair \\
   \ \ \ | $\lambda$\textbf{x}.\textbf{e}  \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Lambda \\
   \ \ \ | \textbf{e} \textbf{e}   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Application \\
-  \ \ \ |  $\textbf{let}$ $x$ $\textbf{=}$ e $\textbf{in}$ e  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Let binding \\
-  \ \ \ |  $\textbf{if}$ $x$ $\textbf{then}$ e $\textbf{else}$ e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Conditional \\
+  \ \ \ |  $\textbf{if}$ $x$ $\textbf{then}$ e $\textbf{else}$ e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Conditional \\
   \ \ \ |  \textbf{vInsert} e  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Insert \\
   \ \ \ |  \textbf{vRemove} e  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Remove \\
-  \ \ \ |  \textbf{eInsert} ((e e) e)  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Edge Insert \\
-  \ \ \ |  \textbf{eRemove} ((e e) e) \ \ \ \ \ \ \ \ \ \ \ \ \ Edge Remove \\
+  \ \ \ |  \textbf{eInsert} e e   \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Edge Insert \\
+  \ \ \ |  \textbf{eRemove} e e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Edge Remove \\
   \ \ \ |  $\textbf{sync}$ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ Superstep barrier synchronization\\
   \ \ \ |  $\textbf{send}$ x e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Send message e to vertex x \\
-  \ \ \ |  $\textbf{halt}$ \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vote to Halt \\
+  \ \ \ |  $\textbf{halt}$ \ \ \ \  \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vote to Halt \\
 \ \\
   v ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
     \ \ \ | $\textbf{v},\textbf{v}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair value \\
@@ -341,7 +53,7 @@ $$\mprset{flushleft}
   \tiny{
   T ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type \\
     \ \ \ | \textbf{V}(\textbf{T}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Type \\
-    \ \ \ | \textbf{E}(\textbf{V(T)}), (\textbf{V(T)})\textbf{;T})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Edge Type\\
+    \ \ \ | \textbf{E}(\textbf{V(T)}), (\textbf{V(T),}\textbf{T})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Edge Type\\
     \ \ \ | $\textbf{T} \Rightarrow \textbf{T}$ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ Arrow type \\
     \ \ \ | ($\textbf{T}, \textbf{T}$) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair Type \\
     \ \ \ | \textbf{Int} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer Type \\
@@ -349,39 +61,160 @@ $$\mprset{flushleft}
 }
 \end{frame}
 
-\subsection{Reduction Rules}
-\begin{frame}{Local}
+\subsection{Typing Rule}
+\begin{frame}
   \tiny{
-  \begin{mathpar}
+\begin{mathpar}
 $$\mprset{flushleft}
-    \inferrule[\scriptsize {(Activate True)}]
-    {\ \ \ \ \ \ \ \ \ \ Q = \bullet \ , \ M(id) = \bullet}
-    {<G, M, Q, S, L_V, L_E, \Sigma <id, v, h>> \ \ \xrightarrow{activate} \ \ <G, M, Q, S, L_V, L_E, \Sigma <id, v, true>>}$$
+  \inferrule[\tiny {(Variable)}]
+    {\Gamma, \ \Lambda \vdash \textbf{X}=T, \ \Lambda^{'}}
+    {\Gamma, \ \Lambda \vdash \textbf{X}:T,\Lambda^{'}}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
-  \inferrule[\scriptsize {(Activate False)}]
-  {\ \ \ \ \ \ \ \ \ \ Q = \bullet \ , \ M(id) \neq \bullet  }
-  {<G, M, Q, S, L_V, L_E, \Sigma <id, v, h>>  \ \ \xrightarrow{deactivate} \ \ <G, M, Q, S, L_V, L_E, \Sigma <id, v, false>>}$$
+  \inferrule[\tiny {(Value)}]
+    {\ \ }
+    {\Gamma, \ \Lambda  \vdash V:V}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Assignment)}]
+    {\Gamma, \ \Lambda \vdash e:T, \ \Lambda^{'} \\\\  \Gamma , \ \Lambda^{'} \vdash X:T, \ \Lambda^{"}}
+    {\Gamma, \ \Lambda \vdash x::e : T, \ \Lambda^{"}}$$
 \end{mathpar}
 }
 \end{frame}
 
-\begin{frame}{Global}
-  \tiny{
-  \begin{mathpar}
+\begin{frame}
+\tiny{
+\begin{mathpar}
 $$\mprset{flushleft}
-    \inferrule[\scriptsize {(Lock Reset)}]
-    {\ \ \ \ \ \ \ \ \ \ Q = \bullet \ , \ M(id) = \bullet}
-    {<G, M, Q, S, L_V, L_E, \Sigma <id, v, h>>  \ \ \xrightarrow{reset} \ \ <G, M, Q, S, \phi, \phi, \Sigma <id, v, true>>}$$
+  \inferrule[\tiny {(Conditional)}]
+    {\Gamma, \ \Lambda \vdash e_1 \ : \ Bool, \ \Lambda \\ \\ \\   \Gamma, \Lambda \vdash e_2 \ : \ T, \ \Lambda^{'} \\\\
+    \\ \\ \\ \\ \\ \\ \ \ \ \ \ \ \ \ \ \Gamma, \ \Lambda \vdash e_3 \ : \ T, \ \Lambda^{"}}
+    {\Gamma, \ \Lambda \vdash if \ e_1 \ then \ e_2 \ else \ e_3: \ T, \ \Lambda^{'} \uplus \Lambda^{"}}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
-\inferrule[\scriptsize {(Lock)}]
-  { edges(id) = E^{'}, \ V^{'}=\{ \forall v^{'}_k \ | \ (v_j, v_k) \in E^{'} \}}
-  {<G, M, Q, S, L_V, L_E, \Sigma <id, v, false>> \ \  \xrightarrow{lock} \ \  <G, M, Q, S, L_V \cup V^{'}, L_E \cup E^{'}, \Sigma <id, v, false>>}$$
+  \inferrule[\tiny {(While)}]
+    {\Gamma, \ \Lambda \vdash e_1 \ : \  Bool, \ \Lambda \\\\ \Gamma, \ \Lambda \vdash e_2 \ : \ T, \ \Lambda^{'}}
+    {\Gamma, \ \Lambda \vdash While \ \ e_1 \ do \ e_2 \ : \ T, \Lambda^{'}}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Lambda)}]
+    {\Gamma, \ \Lambda, \ x \ : \ T_1 \ \vdash \ e \ : \ T_2, \ \Lambda^{'}}
+    {\Gamma, \ \Lambda \vdash  \lambda x.e \ : \ T_1 \rightarrow T_2, \ \Lambda^{'}}$$
+\end{mathpar}
+}
+\end{frame}
+
+\begin{frame}
+\tiny{
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Application)}]
+    {\Gamma, \ \Lambda \vdash e_1 \ : \ T_1 \ \rightarrow \ T_2, \ \Lambda^{'} \\ \\  \Gamma, \ \Lambda^{'} \vdash e_2 \ : \ T_1, \ \Lambda^{"}}
+    {\Gamma, \ \Lambda \vdash \ e_1 \ e_2 \ : \ T_2 \ , \ \Lambda^{''}}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Vertex Insert)}]
+    {\Gamma, \ \Lambda \vdash e_1 \ : \  V(T), \ \Lambda^{'} \\ \\ \Gamma, \ \Lambda^{'} \vdash e_2 \ : \  T, \ \Lambda^{"} \\\\
+    \\ \\ \\ \\ \ \ \ \  \Lambda^{'}/\Lambda \neq \phi}
+    {\Gamma, \ \Lambda \vdash vInsert \ \ e_1 \ \ e_2 \ :\ \Lambda^{'}/\Lambda, \ \Lambda^{"}}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Vertex Remove)}]
+    {\Gamma, \ \Lambda \vdash e \ : \ Int, \Lambda^{'}}
+    {\Gamma, \ \Lambda \vdash \ vRemove \ e \ : \ \Lambda^{'}/\Lambda}$$
+\end{mathpar}
+}
+\end{frame}
+
+\begin{frame}
+  \tiny{
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Edge Insert)}]
+    {\Gamma, \ \Lambda \vdash e \ : \ E(V(T),\ V(T), T^{'}), \ \Lambda^{'}}
+    {\Gamma, \ \Lambda \vdash \ eInsert \ e \ : \ \Lambda^{'}/\Lambda, \ \Lambda^{'}}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Edge Remove)}]
+    {\Gamma, \ \Lambda \vdash e \ : \ E \ (V(T), V(T), T^{'}), \Lambda^{'}}
+    {\Gamma, \ \Lambda \vdash \ eRemove \ e \ : \ \Lambda^{'}/\Lambda, \ \Lambda^{'}}$$
+\end{mathpar}
+}
+\end{frame}
+
+
+\begin{frame}
+  \tiny{
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Sync)}]
+    {\ \ }
+    {\Gamma, \ \Lambda  \vdash sync \ : \ T, \ \Lambda}$$
+\end{mathpar}
+
+  \begin{mathpar}
+  $$\mprset{flushleft}
+    \inferrule[\tiny {(Halt)}]
+      {\ \ }
+      {\Gamma, \ \Lambda  \vdash halt \ : \ T, \ \Lambda}$$
+  \end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Send Message)}]
+    {\Gamma, \ \Lambda \ \vdash e_1 \ Int,\ \Lambda^{'} \\\\ \Lambda^{'} \vdash e_2 \ : \ T \ \Lambda^{"}}
+    {\Gamma, \ \Lambda, \ \vdash \ send \ e_1 \ e_2 \ : \ Bool, \ \Lambda^{"}}$$
+\end{mathpar}
+}
+\end{frame}
+
+\begin{frame}
+  \tiny{
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Disjoint\_True)}]
+    {\forall \lambda, \lambda \in \Lambda \  | \ \lambda \ is \ a \ value}
+    {\Lambda^{'}\ : \ Int}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Disjoint\_Unknown)}]
+    {\exists \lambda, \ \lambda \in \Lambda \ | \ \lambda \ is \ not \ a \ value}
+    {\Lambda\ = \ Unknown}$$
+\end{mathpar}
+}
+\end{frame}
+
+\begin{frame}
+  \tiny{
+\begin{mathpar}
+
+$$\mprset{flushleft}
+  \inferrule[\tiny {(M\_Disjoint)}]
+     {\Gamma, \ \vdash eInsert \ e \ : \Lambda,\\ \\ a \ = \ value(\Lambda);\ Int  \\\\
+      \Gamma, \ \vdash eRemove \ e \ : \Lambda^{'},\\ \ \ b \ = \ value(\Lambda^{'});\ Int \\\\
+      \\ \\ \\ \\ \ \ \ \  a \neq b \\\\
+      \\ \\ \\ \\ \\ \bigvee \\\\
+      \Gamma, \ \vdash vInsert \ e \ : \Lambda,\\ \\ a \ = \ value(\Lambda);\ Int  \\\\
+       \Gamma, \ \vdash vInsert \ e \ : \Lambda^{'},\\ \ \ \ \ \  b \ = \ value(\Lambda^{'});\ Int \\\\
+       \\ \\ \\ \\ \ \ \ \  a \neq b}
+    {\Gamma \vdash \Lambda \ \# \ \Lambda^{'} \ : \ true}$$
 \end{mathpar}
 }
 \end{frame}
