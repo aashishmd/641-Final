@@ -22,19 +22,19 @@
 
 \begin{frame}
   \tiny{
-    \textit{P} ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Program \\
+    \textit{P} ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Program \\
     \ \ \ \  | $\overline {\textbf{e}}$ \\
 \ \\
-  e ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Expression \\
-  \ \ \ | \textbf{x} \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Variable \\
-  \ \ \ | \textbf{v}  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
-  \ \ \ | \textbf{x}:= \textbf{e}   \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Assignment \\
-  \ \ \ | (\textbf{e} \textbf{e})   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair \\
-  \ \ \ | $\lambda$\textbf{x}.\textbf{e}  \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Lambda \\
-  \ \ \ | \textbf{e} \textbf{e}   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Application \\
-  \ \ \ |  $\textbf{let}$ $x$ $\textbf{=}$ e $\textbf{in}$ e  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Let binding \\
-  \ \ \ |  $\textbf{if}$ $x$ $\textbf{then}$ e $\textbf{else}$ e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Conditional \\
-  \ \ \ |  \textbf{vInsert} e  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Insert \\
+  e ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Expression \\
+  \ \ \ | \textbf{x} \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Variable \\
+  \ \ \ | \textbf{v}  \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
+  \ \ \ | \textbf{x}:= \textbf{e}   \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Assignment \\
+  \ \ \ | (\textbf{e} \textbf{e})   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair \\
+  \ \ \ | $\lambda$\textbf{x}.\textbf{e}  \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Lambda \\
+  \ \ \ | \textbf{e} \textbf{e}   \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Application \\
+  \ \ \ |  $\textbf{if}$ $x$ $\textbf{then}$ e $\textbf{else}$ e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Conditional \\
+  \ \ \ |  $\textbf{while}$ $e$ $\textbf{do}$ e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ While \\
+  \ \ \ |  \textbf{vInsert} (e,e)  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Insert \\
   \ \ \ |  \textbf{vRemove} e \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Remove \\
   \ \ \ |  \textbf{eInsert} ((e e) e)  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Edge Insert \\
   \ \ \ |  \textbf{eRemove} ((e e) e)   \ \ \ \ \ \ \ \ \ \ \ \ \ \ Edge Remove \\
@@ -150,74 +150,141 @@ $$\mprset{flushleft}
 \end{frame}
 
 \subsection{Typing Rule}
-\begin{frame}{T-VAR, T-ABS, T-APP}
+\begin{frame}
   \tiny{
 \begin{mathpar}
 $$\mprset{flushleft}
-  \inferrule
-    {x:T \in \Gamma}
-    {\Gamma \vdash \textbf{x}:T}$$
+  \inferrule[\tiny {(Variable)}]
+    {\Lambda \vdash X:(T, \Lambda)}
+    {\Gamma, \Lambda \vdash \textbf{X}:T,\Lambda}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
-  \inferrule
-    {\Gamma, x:T_1 \vdash t:T_2}
-    {\Gamma \vdash (x:T_1) \Rightarrow \textbf{t}:T_1 \Rightarrow T_2}$$
+  \inferrule[\tiny {(Value)}]
+    {\ \ }
+    {\Gamma, \Lambda  \vdash V:V}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
-  \inferrule
-    {\Gamma \vdash t_1:T_1 \Rightarrow T_2 \ \ \ \Gamma \vdash t_2:T_1}
-    {\Gamma \vdash t_1t_2:T_2}$$
+  \inferrule[\tiny {(Assignment)}]
+    {\Lambda \vdash X:Td_1 \\\\  \Lambda \vdash e:Td_2 \\ \\ \Lambda^{'} \vdash X:T,d_2}
+    {\Gamma, \Lambda \vdash x::e : T \Lambda^{'}}$$
 \end{mathpar}
 }
 \end{frame}
 
-\begin{frame}{T-ASS, T-LET}
+\begin{frame}
 \tiny{
 \begin{mathpar}
 $$\mprset{flushleft}
-  \inferrule
-    {\Gamma \vdash x:T_1 \vdash e:T_2 }
-    {\Gamma \vdash (x:T_1.e):T_1 \Rightarrow T_2}$$
+  \inferrule[\tiny {(Conditional)}]
+    {\Gamma \vdash e_2 \ T \Lambda^{'} \\ \\ \\   \Gamma \vdash e_1 \ boolean \ \Lambda \\\\ \Gamma \vdash e_3 \ T \ \Lambda^{''}}
+    {\Gamma, \Lambda \vdash if \ e_1 \ e_2 \ e_3: \ T, \Lambda^{'} \uplus \Lambda^{"}}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
-  \inferrule
-    {\Gamma \vdash t_1:T_1 \ \ \ \Gamma,x:T_1 \vdash t_2:T_2}
-    {\Gamma \vdash let \ \ x=t_1 \ in \ \ t_2:T_2}$$
+  \inferrule[\tiny {(While)}]
+    {\Gamma \vdash e_1 \ \  boolean \ \Lambda \\\\ \Gamma \vdash e_2 \ T \ \Lambda^{'}}
+    {\Gamma \Lambda \vdash while \ \ e_1 \ \ e_2 \ : \ T, \Lambda^{'}}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Lambda)}]
+    {\Lambda \vdash X \ : \ T_1 \ \Lambda^{'} \\ \\  \Lambda^{'}  \vdash e_1 \ : \ e_1 \rightarrow T_2 \ \Lambda^{'}}
+    {\Gamma \Lambda \vdash  \lambda Xe_1 \ : \ (T_1 \rightarrow T_2, \ \Lambda^{''})}$$
 \end{mathpar}
 }
 \end{frame}
 
-\begin{frame}{T-TRUE, T-FALSE, T-IF}
+\begin{frame}
 \tiny{
 \begin{mathpar}
 $$\mprset{flushleft}
-  \inferrule
-    {\ \ \ \ }
-    {\Gamma \vdash true \in Bool}$$
+  \inferrule[\tiny {(Application)}]
+    {\Lambda \vdash e_2 \ : \ T_1, \Lambda^{'} \\ \\  \Lambda^{'} \vdash e_1 \ : \ T_1 \rightarrow T_2}
+    {\Gamma, \Lambda \vdash \ e_1 \ e_2 \ : \ (T_2\Lambda^{''})}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
-  \inferrule
-    {\ \ \ \ }
-    {\Gamma \vdash false \in Bool}$$
+  \inferrule[\tiny {(Vertex Insert)}]
+    {\Gamma, \Lambda \vdash e_1 \ : \  V(T), \ \Lambda^{'} \\ \\ \Lambda^{'}/\Lambda \neq \phi \\\\
+    \Gamma, \Lambda \vdash e_2 \ : \  T, \ \Lambda^{"}}
+    {\Gamma \Lambda \vdash vInsert \ \ (e_1 \ \ e_2) \ :\ \Lambda^{'}/\Lambda, \ Lambda^{"}}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
-  \inferrule
-    {\Gamma \vdash t_1 \in Bool  \ \ \ \Gamma \vdash t_2 \in T \ \ \ \Gamma \vdash t_3 \in T }
-    {\Gamma \vdash if \ \ t_1 \ \ then \ \ t_2 \ \ else \ \ t_3}$$
+  \inferrule[\tiny {(Vertex Remove)}]
+    {\Gamma, \Lambda \vdash e \ : \ Int, \Lambda^{'}}
+    {\Gamma, \Lambda \vdash \ vRemove \ e \ : \ \Lambda^{'}/\Lambda}$$
 \end{mathpar}
 }
 \end{frame}
 
+\begin{frame}
+  \tiny{
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Edge Insert)}]
+    {\Gamma, \Lambda \vdash e \ : \ (V(T).V(T), T^{'}), \Lambda^{'}}
+    {\Gamma, \Lambda \vdash \ eInsert \ e \ : \ \Lambda^{'}/\Lambda, \Lambda^{'}}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {(Edge Remove)}]
+    {\Gamma, \Lambda \vdash e \ : \ E \ (V(T).V(T), T^{'}), \Lambda^{'}}
+    {\Gamma, \Lambda \vdash \ eRemove \ e \ : \ T, \ \Lambda}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {()}]
+    {\Lambda \vdash e_1 \ Int,\ \Lambda^{'} \\\\ \Lambda^{'} \vdash e_2 \ : \ T \ \Lambda^{"}}
+    {\Lambda \vdash \ send \ e_1 \ e_2 \ : \ boolean, \ \Lambda^{"}}$$
+\end{mathpar}
+}
+\end{frame}
+
+\begin{frame}
+  \tiny{
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {()}]
+    {\forall \lambda, \lambda \in \Lambda \ \ \lambda \ is \ a \ value}
+    {value(\Lambda)\ = \ Int}$$
+\end{mathpar}
+
+\begin{mathpar}
+$$\mprset{flushleft}
+  \inferrule[\tiny {()}]
+    {\exists \lambda, \lambda \in \Lambda \ \ \lambda \ is \ not \ a \ value}
+    {value(\Lambda)\ = \ ?}$$
+\end{mathpar}
+}
+\end{frame}
+
+
+\begin{frame}
+  \tiny{
+\begin{mathpar}
+
+$$\mprset{flushleft}
+  \inferrule[\tiny {()}]
+     {\vdash eInsert \ e \ e \ : \Lambda,\ a \ = \ value(\Lambda);\ Int \\ \\ a \neq b \\\\
+      \vdash eRemove (e) \ : \Lambda^{'},\ a \ = \ value(\Lambda^{'});\ Int \\\\
+      \\ \\ \\ \\ \\ \bigvee \\\\
+      \vdash vRemove \ e \ : \ \Lambda, \ a \ = \ value(\Lambda)\ : \ Int \\ \ \  a \neq b \\\\
+      \vdash vInsert \ e \ : \Lambda^{'}, \ b \ = \ value(\Lambda^{'})\ : \ Int}
+    {\Lambda \ \# \ \Lambda^{'}}$$
+\end{mathpar}
+}
+\end{frame}
 \section{Solution}
 \subsection{Core Language}
 
