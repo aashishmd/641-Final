@@ -53,7 +53,7 @@
   \tiny{
   T ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type \\
     \ \ \ | \textbf{V}(\textbf{T}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Vertex Type \\
-    \ \ \ | \textbf{E}(\textbf{V(T)}), (\textbf{V(T),}\textbf{T})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Edge Type\\
+    \ \ \ | \textbf{E}(\textbf{V(T)}, \textbf{V(T),}\textbf{T})\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Edge Type\\
     \ \ \ | $\textbf{T} \Rightarrow \textbf{T}$ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ Arrow type \\
     \ \ \ | ($\textbf{T}, \textbf{T}$) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair Type \\
     \ \ \ | \textbf{Int} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer Type \\
@@ -189,14 +189,14 @@ $$\mprset{flushleft}
 $$\mprset{flushleft}
   \inferrule[\tiny {(Disjoint\_True)}]
     {\forall \lambda, \lambda \in \Lambda \  | \ \lambda \ is \ a \ value}
-    {\Lambda^{'}\ : \ Int}$$
+    {\Lambda\ : \ Int}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
   \inferrule[\tiny {(Disjoint\_Unknown)}]
     {\exists \lambda, \ \lambda \in \Lambda \ | \ \lambda \ is \ not \ a \ value}
-    {\Lambda\ = \ Unknown}$$
+    {\Lambda\ : \ Unknown}$$
 \end{mathpar}
 }
 \end{frame}
@@ -217,4 +217,14 @@ $$\mprset{flushleft}
     {\Gamma \vdash \Lambda \ \# \ \Lambda^{'} \ : \ true}$$
 \end{mathpar}
 }
+\end{frame}
+
+\begin{frame}
+  \scriptsize {Type judgement for expressions:} \\ \ \\
+  \tiny{
+  $\Gamma, \ \Lambda \ \vdash \ e \ : \ T, \ \Lambda$ \ \ \  where \\ \ \\
+  $\Gamma \ ::= {\{ I \ : \ T_3 \}}_{I \in K}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type environment\\ \ \\
+  \ \ \ \ \ \ \ \ where K is finite \\
+  \ \\ $\Lambda \ ::= \ \phi \ | \ \Lambda \ \# \ \Lambda$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Conflict \ disjointness \ check
+  }
 \end{frame}
