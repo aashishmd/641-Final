@@ -3,7 +3,7 @@
 
 \begin{frame}
 \tiny{
-  K ::= <G, M, Q, S, $L_v$, $L_e$, $\Sigma$> $\hspace{23mm}$ Global Configurations \\
+  K ::= <G, M, Q, S, $L_V$, $L_E$, $\Sigma$> $\hspace{23mm}$ Global Configurations \\
   $\Sigma$ ::= $\bullet$ \ | $\Sigma$ ; <id, v, h>  $\hspace{30mm}$ Local Configurations \\
   h ::= \{ true, false\}\\
   I ::= \{$V_k \mapsto$ id \}\\
@@ -15,7 +15,7 @@
   \ \\
   $v \  \in V$ \ \  set of vertices\\
   $e \ \in E$ \ \ set of edges \\
-  id $\in \mathfrak{N}$ \\
+  id $\in \mathfrak{N}$ \ \ set of vertex identifiers\\
   k \ $\in \mathfrak{K}$ \ \ \ is finite
 }
 \end{frame}
@@ -59,6 +59,17 @@
     \ \ \ | \textbf{Int} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer Type \\
     \ \ \ | \textbf{Bool}\ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Boolean Type
 }
+\newline
+\newline
+
+  \tiny{
+  \textbf{Type judgement for expressions:}
+  \\ \ \\
+  $\Gamma, \ \Lambda \ \vdash \ e \ : \ T, \ \Lambda$ \ \ \  where \\ \ \\
+  $\Gamma \ ::= {\{ I \ : \ T_I \}}_{I \in K}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type environment\\ \ \\
+  \ \ \ \ \ \ \ \ where K is finite \\
+  \ \\ $\Lambda \ ::= \ \phi \ | \ \Lambda \ \# \ \Lambda$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Conflict \ disjointness \ check
+  }
 \end{frame}
 
 \subsection{Typing Rule}
@@ -207,24 +218,16 @@ $$\mprset{flushleft}
 
 $$\mprset{flushleft}
   \inferrule[\tiny {(M\_Disjoint)}]
-     {\Gamma, \ \vdash eInsert \ e \ : \Lambda,\\ \\ a \ = \ value(\Lambda);\ Int  \\\\
-      \Gamma, \ \vdash eRemove \ e \ : \Lambda^{'},\\ \ \ b \ = \ value(\Lambda^{'});\ Int \\\\
+     {\Gamma, \ \vdash eInsert \ e \ : \Lambda,\\ \\ a \ = \ value(\Lambda):\ Int  \\\\
+      \Gamma, \ \vdash eRemove \ e \ : \Lambda^{'},\\ \ \ b \ = \ value(\Lambda^{'}):\ Int \\\\
       \\ \\ \\ \\ \ \ \ \  a \neq b \\\\
       \\ \\ \\ \\ \\ \bigvee \\\\
-      \Gamma, \ \vdash vInsert \ e \ : \Lambda,\\ \\ a \ = \ value(\Lambda);\ Int  \\\\
-       \Gamma, \ \vdash vInsert \ e \ : \Lambda^{'},\\ \ \ \ \ \  b \ = \ value(\Lambda^{'});\ Int \\\\
+      \Gamma, \ \vdash vInsert \ e \ : \Lambda,\\ \\ a \ = \ value(\Lambda):\ Int  \\\\
+       \Gamma, \ \vdash vInsert \ e \ : \Lambda^{'},\\ \ \ \ \ \  b \ = \ value(\Lambda^{'}):\ Int \\\\
        \\ \\ \\ \\ \ \ \ \  a \neq b}
     {\Gamma \vdash \Lambda \ \# \ \Lambda^{'} \ : \ true}$$
 \end{mathpar}
 }
 \end{frame}
 
-\begin{frame}
-  \scriptsize {Type judgement for expressions:} \\ \ \\
-  \tiny{
-  $\Gamma, \ \Lambda \ \vdash \ e \ : \ T, \ \Lambda$ \ \ \  where \\ \ \\
-  $\Gamma \ ::= {\{ I \ : \ T_3 \}}_{I \in K}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Type environment\\ \ \\
-  \ \ \ \ \ \ \ \ where K is finite \\
-  \ \\ $\Lambda \ ::= \ \phi \ | \ \Lambda \ \# \ \Lambda$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Conflict \ disjointness \ check
-  }
-\end{frame}
+
