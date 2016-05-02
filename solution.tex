@@ -43,9 +43,9 @@
 \ \\
   v ::= \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value \\
     \ \ \ | $\textbf{v},\textbf{v}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Pair value \\
-    \ \ \ | \textbf{i} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer \\
-    \ \ \ | \textbf{b} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Boolean \\
-    \ \ \ | $\textbf{(x:T)} \Rightarrow e $ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  User Defined Function \\
+    \ \ \ | \textbf{i} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Integer value\\
+    \ \ \ | \textbf{b} \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Boolean value\\
+    \ \ \ | $\textbf{(x:T)} \Rightarrow e $ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Function value\\
     }
 \end{frame}
 
@@ -79,21 +79,21 @@
 $$\mprset{flushleft}
   \inferrule[\tiny {(Variable)}]
     {\Gamma, \ \Lambda \vdash \textbf{X}=T, \ \Lambda^{'}}
-    {\Gamma, \ \Lambda \vdash \textbf{X}:T,\Lambda^{'}}$$
+    {\Gamma, \ \Lambda \vdash \textbf{X}:T, \ \Lambda^{'}}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
   \inferrule[\tiny {(Value)}]
     {\ \ }
-    {\Gamma, \ \Lambda  \vdash V:V}$$
+    {\Gamma, \ \Lambda  \vdash V:T, \ \Lambda}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
   \inferrule[\tiny {(Assignment)}]
     {\Gamma, \ \Lambda \vdash e:T, \ \Lambda^{'} \\\\  \Gamma , \ \Lambda^{'} \vdash X:T, \ \Lambda^{"}}
-    {\Gamma, \ \Lambda \vdash x::e : T, \ \Lambda^{"}}$$
+    {\Gamma, \ \Lambda \vdash x:=e : T, \ \Lambda^{"}}$$
 \end{mathpar}
 }
 \end{frame}
@@ -105,13 +105,13 @@ $$\mprset{flushleft}
   \inferrule[\tiny {(Conditional)}]
     {\Gamma, \ \Lambda \vdash e_1 \ : \ Bool, \ \Lambda \\ \\ \\   \Gamma, \Lambda \vdash e_2 \ : \ T, \ \Lambda^{'} \\\\
     \\ \\ \\ \\ \\ \\ \ \ \ \ \ \ \ \ \ \Gamma, \ \Lambda \vdash e_3 \ : \ T, \ \Lambda^{"}}
-    {\Gamma, \ \Lambda \vdash if \ e_1 \ then \ e_2 \ else \ e_3: \ T, \ \Lambda^{'} \uplus \Lambda^{"}}$$
+    {\Gamma, \ \Lambda \vdash if \ e_1 \ then \ e_2 \ else \ e_3: \ T, \ \Lambda^{'} \uplus \ \Lambda^{"}}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
   \inferrule[\tiny {(While)}]
-    {\Gamma, \ \Lambda \vdash e_1 \ : \  Bool, \ \Lambda \\\\ \Gamma, \ \Lambda \vdash e_2 \ : \ T, \ \Lambda^{'}}
+    {\Gamma, \ \Lambda \vdash e_1 \ : \  Bool, \ \Lambda \\\\ \Gamma, \ \Lambda \vdash e_2 \ : \ T, \ \ \ \Lambda^{'}}
     {\Gamma, \ \Lambda \vdash While \ \ e_1 \ do \ e_2 \ : \ T, \Lambda^{'}}$$
 \end{mathpar}
 
@@ -138,14 +138,14 @@ $$\mprset{flushleft}
   \inferrule[\tiny {(Vertex Insert)}]
     {\Gamma, \ \Lambda \vdash e_1 \ : \  V(T), \ \Lambda^{'} \\ \\ \Gamma, \ \Lambda^{'} \vdash e_2 \ : \  T, \ \Lambda^{"} \\\\
     \\ \\ \\ \\ \ \ \ \  \Lambda^{'}/\Lambda \neq \phi}
-    {\Gamma, \ \Lambda \vdash vInsert \ \ e_1 \ \ e_2 \ :\ \Lambda^{'}/\Lambda, \ \Lambda^{"}}$$
+    {\Gamma, \ \Lambda \vdash vInsert \ \ e_1 \ \ e_2 \ :\ Bool, \ \Lambda^{'}/\Lambda, \ \Lambda^{"}}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
   \inferrule[\tiny {(Vertex Remove)}]
     {\Gamma, \ \Lambda \vdash e \ : \ Int, \Lambda^{'}}
-    {\Gamma, \ \Lambda \vdash \ vRemove \ e \ : \ \Lambda^{'}/\Lambda}$$
+    {\Gamma, \ \Lambda \vdash \ vRemove \ e \ : \ Bool, \ \Lambda^{'}/\Lambda}$$
 \end{mathpar}
 }
 \end{frame}
@@ -156,14 +156,14 @@ $$\mprset{flushleft}
 $$\mprset{flushleft}
   \inferrule[\tiny {(Edge Insert)}]
     {\Gamma, \ \Lambda \vdash e \ : \ E(V(T),\ V(T), T^{'}), \ \Lambda^{'}}
-    {\Gamma, \ \Lambda \vdash \ eInsert \ e \ : \ \Lambda^{'}/\Lambda, \ \Lambda^{'}}$$
+    {\Gamma, \ \Lambda \vdash \ eInsert \ e \ : \ Bool, \ \Lambda^{'}/\Lambda, \ \Lambda^{'}}$$
 \end{mathpar}
 
 \begin{mathpar}
 $$\mprset{flushleft}
   \inferrule[\tiny {(Edge Remove)}]
     {\Gamma, \ \Lambda \vdash e \ : \ E \ (V(T), V(T), T^{'}), \Lambda^{'}}
-    {\Gamma, \ \Lambda \vdash \ eRemove \ e \ : \ \Lambda^{'}/\Lambda, \ \Lambda^{'}}$$
+    {\Gamma, \ \Lambda \vdash \ eRemove \ e \ : \ Bool, \ \Lambda^{'}/\Lambda, \ \Lambda^{'}}$$
 \end{mathpar}
 }
 \end{frame}
@@ -188,7 +188,7 @@ $$\mprset{flushleft}
 \begin{mathpar}
 $$\mprset{flushleft}
   \inferrule[\tiny {(Send Message)}]
-    {\Gamma, \ \Lambda \ \vdash e_1 \ Int,\ \Lambda^{'} \\\\ \Lambda^{'} \vdash e_2 \ : \ T \ \Lambda^{"}}
+    {\Gamma, \ \Lambda \ \vdash e_1 \ : \ Int,\ \Lambda^{'} \\\\ \Gamma, \Lambda^{'} \vdash e_2 \ : \ T, \ \Lambda^{"}}
     {\Gamma, \ \Lambda, \ \vdash \ send \ e_1 \ e_2 \ : \ Bool, \ \Lambda^{"}}$$
 \end{mathpar}
 }
