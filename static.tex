@@ -1,0 +1,226 @@
+
+\subsection{Mutation Dependency Disjoint Check}
+\begin{frame}
+Disjoint check rules\\
+\ \\
+\begin{tiny}
+The rules for the check of the disjointness of mutation dependent type against the mutation environment is shown below:
+\begin{mathpar}
+\mprset{flushleft}
+\inferrule[\tiny {(Unknown)}]
+    {
+    \psi \neq v
+    }
+    {(\psi , KIND)\ \# \Delta }
+
+\inferrule[\tiny {(Safe)}]
+    {
+    (KIND=vInsert, \nexists (\psi', vInsert) \in \Delta, \psi=\psi') \vee\ \\\\
+    (KIND=eInsert, \nexists (\psi', vRemove) \in \Delta, \psi=\psi') \vee\ \\\\
+    (KIND=vRemove, \nexists (\psi', eInsert) \in \Delta, \psi=\psi')
+    }
+    {(\psi , KIND)\ \# \Delta }
+    
+    
+\end{mathpar}
+\end{tiny}
+\end{frame}
+
+\subsection{Typing Rules}
+
+\begin{frame}
+Standard typing rules:
+\begin{tiny}
+\begin{mathpar}
+\mprset{flushleft}
+
+\inferrule[\tiny {(Variable)}]
+    {
+    \Gamma \vdash x=T 
+    }
+    {\Gamma, \Lambda \vdash x:T, \Lambda}
+
+\inferrule[\tiny {(Value)}]
+    {\ \ }
+    {\Gamma, \Lambda  \vdash v:T, \Lambda}
+
+\inferrule[\tiny {(Assignment\_Int)}]
+    {
+     \Gamma \vdash e:Int\\
+     \Gamma \vdash x:Int\\\\
+     \Lambda \vdash e:\psi\\
+     \Lambda' \vdash  x:\psi
+     }
+    {
+    	\Gamma, \Lambda \vdash x:=e : T, \Lambda '
+    }
+    
+\inferrule[\tiny {(Conditional)}]
+    {
+     \Gamma \vdash e_1 : Bool\\
+     \Gamma, \Lambda \vdash e_2 :T, \Lambda '\\
+     \Gamma, \Lambda \vdash e_3 :T, \Lambda ''\\
+  	 \Lambda ''' = \Lambda ' \uplus \Lambda ''
+    }
+    {\Gamma, \Lambda \vdash if\ e_1 \ then\ e_2 \ else\ e_3 :T, \Lambda '''}
+
+	\inferrule[\tiny {(While)}]
+    {
+     \Gamma \vdash e_1:Bool\\
+     \Gamma, \Lambda \vdash e_2:T, \Lambda'
+    }
+    {\Gamma, \Lambda \vdash while\ e_1\ e_2:T,\Lambda'}
+
+
+	\inferrule[\tiny {(Lambda)}]
+    {
+     \Gamma \vdash x: T_1\\
+     \Gamma[x/T_1] \vdash e: T_2}
+    {\Gamma, \Lambda \vdash \lambda x.e: T_1 \rightarrow T_2, \Lambda}
+    
+    \inferrule[\tiny {(Application)}]
+    {
+     \Gamma \vdash e_1 : T_1 \rightarrow T_2\\
+     \Gamma, \Lambda \vdash e_2 : T_1, \Lambda'\\
+     \Gamma, \Lambda' \vdash e_1 : T_1, \Lambda''
+     }
+    {\Gamma, \Lambda \vdash e_1 \ e_2 : T_2 , \Lambda''}
+    
+    \inferrule[\tiny {(Operation)}]
+    {
+     \Gamma \vdash e_1 : T\\
+     \Gamma \vdash e_2 : T\\
+     \Lambda \vdash e_1 : \psi_1\\
+     \Lambda \vdash e_1 : \psi_2\\
+     \Lambda' = \Lambda \uplus \psi_1 \uplus \psi_2
+     }
+    {\Gamma, \Lambda \vdash e_1 op e_2 : T, \Lambda'}
+    
+\end{mathpar}
+\end{tiny}
+\end{frame}
+
+\begin{frame}
+Mutation expressions typing rule:
+\begin{tiny}
+\begin{mathpar}
+\mprset{flushleft}
+\inferrule[\tiny {(Vertex Insert)}]
+    {
+    \Gamma \vdash e_1 : Int\\
+    \Gamma \vdash e_2 : T\\
+    \Lambda \vdash e_1 : \psi\\
+    \psi \# \Delta\\
+    \Delta' = (\psi, vInsert) \uplus \Delta
+    }
+    {\Gamma, \Lambda, \Delta \vdash vInsert \ e_1 \ e_2 :Bool, \Lambda, \Delta'}
+    
+\inferrule[\tiny {(Vertex Remove)}]
+    {
+    \Gamma \vdash e_1 : Int\\
+    \Lambda \vdash e_1 : \psi\\
+    \psi \# \Delta\\
+    \Delta' = (\psi, vRemove) \uplus \Delta
+    }
+    {\Gamma, \Lambda, \Delta \vdash vRemove \ e_1 :Bool, \Lambda, \Delta'}
+    
+\inferrule[\tiny {(Edge Insert)}]
+    {
+    \Gamma e_1 : Int\\
+    \Gamma e_2 : Int\\
+    \Gamma e_3 : T\\ 
+    \Lambda \vdash e_1 : \psi_1\\
+    \Lambda \vdash e_2 : \psi_2\\
+    \psi_1 \# \Delta\\
+    \psi_2 \# \Delta\\
+    \Delta' = (\psi_1, eInsert) \uplus (\psi_2, eInsert) \uplus \Delta
+    }
+    {\Gamma, \Lambda \Delta \vdash eInsert\ e_1\ e_2\ e_3 : Bool, \Lambda, \Delta'}
+
+\inferrule[\tiny {(Edge Remove)}]
+    {
+    \Gamma e_1 : Int\\
+    \Gamma e_2 : Int\\
+    }
+    {\Gamma, \Lambda \vdash eRemove\ e_1\ e_2 : Bool, \Lambda}
+        
+    \inferrule[\tiny {(Sync)}]
+    {\ \ }
+    {\Gamma, \Lambda \vdash sync : T, \Lambda}
+    
+    \inferrule[\tiny {(Halt)}]
+    {\ \ }
+    {\Gamma, \Lambda \vdash halt : T, \Lambda}
+    
+    \inferrule[\tiny {(Send Message)}]
+    {\Gamma \vdash e_1 :Int}
+    {\Gamma, \Lambda \vdash send\ e_1\ e_2 : Bool, \Lambda}
+    
+\end{mathpar}
+\end{tiny}
+\end{frame}
+
+
+% \begin{frame}
+% \tiny{
+% \begin{mathpar}
+% $$\mprset{flushleft}
+%   \inferrule[\tiny {(Conditional)}]
+%     {\Gamma, \ \Lambda \vdash e_1 \ : \ Bool, \ \Lambda \\ \\ \\   \Gamma, \Lambda \vdash e_2 \ : \ T, \ \Lambda^{'} \\\\
+%     \\ \\ \\ \\ \\ \\ \ \ \ \ \ \ \ \ \ \Gamma, \ \Lambda \vdash e_3 \ : \ T, \ \Lambda^{"}}
+%     {\Gamma, \ \Lambda \vdash if \ e_1 \ then \ e_2 \ else \ e_3: \ T, \ \Lambda^{'} \uplus \ \Lambda^{"}}$$
+% \end{mathpar}
+% 
+% \begin{mathpar}
+% $$\mprset{flushleft}
+%   \inferrule[\tiny {(While)}]
+%     {\Gamma, \ \Lambda \vdash e_1 \ : \  Bool, \ \Lambda \\\\ \Gamma, \ \Lambda \vdash e_2 \ : \ T, \ \ \ \Lambda^{'}}
+%     {\Gamma, \ \Lambda \vdash While \ \ e_1 \ do \ e_2 \ : \ T, \Lambda^{'}}$$
+% \end{mathpar}
+% 
+% \begin{mathpar}
+% $$\mprset{flushleft}
+%   \inferrule[\tiny {(Lambda)}]
+%     {\Gamma, \ \Lambda, \ x \ : \ T_1 \ \vdash \ e \ : \ T_2, \ \Lambda^{'}}
+%     {\Gamma, \ \Lambda \vdash  \lambda x.e \ : \ T_1 \rightarrow T_2, \ \Lambda^{'}}$$
+% \end{mathpar}
+% }
+% \end{frame}
+
+% \begin{frame}
+% \tiny{
+% \begin{mathpar}
+% $$\mprset{flushleft}
+%   \inferrule[\tiny {(Vertex Insert)}]
+%     {\Gamma, \ \Lambda \vdash e_1 \ : \  V(T), \ \Lambda^{'} \\ \\ \Gamma, \ \Lambda^{'} \vdash e_2 \ : \  T, \ \Lambda^{"} \\\\
+%     \\ \\ \\ \\ \ \ \ \  \Lambda^{'}/\Lambda \neq \phi}
+%     {\Gamma, \ \Lambda \vdash vInsert \ \ e_1 \ \ e_2 \ :\ Bool, \ \Lambda^{'}/\Lambda, \ \Lambda^{"}}$$
+% \end{mathpar}
+% 
+% \begin{mathpar}
+% $$\mprset{flushleft}
+%   \inferrule[\tiny {(Vertex Remove)}]
+%     {\Gamma, \ \Lambda \vdash e \ : \ Int, \Lambda^{'}}
+%     {\Gamma, \ \Lambda \vdash \ vRemove \ e \ : \ Bool, \ \Lambda^{'}/\Lambda}$$
+% \end{mathpar}
+% }
+% \end{frame}
+% 
+% \begin{frame}
+%   \tiny{
+% \begin{mathpar}
+% $$\mprset{flushleft}
+%   \inferrule[\tiny {(Edge Insert)}]
+%     {\Gamma, \ \Lambda \vdash e \ : \ E(V(T),\ V(T), T^{'}), \ \Lambda^{'}}
+%     {\Gamma, \ \Lambda \vdash \ eInsert \ e \ : \ Bool, \ \Lambda^{'}/\Lambda, \ \Lambda^{'}}$$
+% \end{mathpar}
+% 
+% \begin{mathpar}
+% $$\mprset{flushleft}
+%   \inferrule[\tiny {(Edge Remove)}]
+%     {\Gamma, \ \Lambda \vdash e \ : \ E \ (V(T), V(T), T^{'}), \Lambda^{'}}
+%     {\Gamma, \ \Lambda \vdash \ eRemove \ e \ : \ Bool, \ \Lambda^{'}/\Lambda, \ \Lambda^{'}}$$
+% \end{mathpar}
+% }
+% \end{frame}
+

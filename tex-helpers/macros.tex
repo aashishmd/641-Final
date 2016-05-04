@@ -32,8 +32,9 @@
 \usepackage{fixltx2e}
 \usepackage{courier}
 % formatting for grammars
-% \input{obey}
+\input{tex-helpers/obey}
 % \input{grammar}
+\input{tex-helpers/grammar}
 
 \usepackage{soul}
 \newcommand{\hlc}[2][yellow]{ {\sethlcolor{#1} \hl{#2}} }
@@ -242,6 +243,7 @@
 \newcommand{\Int}{\mbox{\texttt{\textbf{int}}}}
 \newcommand{\Void}{\mbox{\texttt{\textbf{void}}}}
 \newcommand{\Nat}{\mbox{\texttt{\textbf{Nat}}}}
+\newcommand{\ttab}{\mbox{\ \ \ }}
 
 % auxiliary funtions for updating the event hierarchies
 %\newcommand*{\updateGamma}{\auxFunc{updateHierarchy}}
@@ -296,33 +298,33 @@
 \definecolor{darkgray}{gray}{0.5}
 \definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
 
-\lstset{
-	language=scala, emph={},
-	mathescape=false, escapechar=@,
-	backgroundcolor=\color{lightgray},
-	commentstyle=\color{darkgray},
-	keywordstyle=\color{OliveGreen}\bfseries,
-	basicstyle=\scriptsize\sffamily,
-	numberstyle=\scriptsize\sffamily,
-	emphstyle=\bfseries,
-	numbers=left, stepnumber=1,
-	numberblanklines=false,
-	numberstyle=\tiny,
-	numbersep=-3pt,
-	frame=none, framexleftmargin=0pt, framexrightmargin=0pt, 
-	%xleftmargin=15pt, xrightmargin=4pt,
-	columns=flexible, breaklines=true,
-	showspaces=false, showstringspaces=false, showtabs=false, tabsize=2,
-	morekeywords={abstract,case,catch,class,def,do,else,extends,%
-          false,final,finally,for,forSome,if,implicit,import,lazy,%
-          match,new,null,object,override,package,private,protected,%
-          return,sealed,super,this,throw,trait,true,try,type,%
-          val,var,while,with,yield,
-          map,filter,flatmap,sample,groupByKey,reduceByKey,
-          union,join,cogroup,crossProduct,mapValues,sort,partitionBy,
-          count,collect,reduce,lookup,save},
-	otherkeywords={=>,<-,<\%,<:,>:,\#,@}
-}
+% \lstset{
+% 	language=scala, emph={},
+% 	mathescape=false, escapechar=@,
+% 	backgroundcolor=\color{lightgray},
+% 	commentstyle=\color{darkgray},
+% 	keywordstyle=\color{OliveGreen}\bfseries,
+% 	basicstyle=\scriptsize\sffamily,
+% 	numberstyle=\scriptsize\sffamily,
+% 	emphstyle=\bfseries,
+% 	numbers=left, stepnumber=1,
+% 	numberblanklines=false,
+% 	numberstyle=\tiny,
+% 	numbersep=-3pt,
+% 	frame=none, framexleftmargin=0pt, framexrightmargin=0pt, 
+% 	%xleftmargin=15pt, xrightmargin=4pt,
+% 	columns=flexible, breaklines=true,
+% 	showspaces=false, showstringspaces=false, showtabs=false, tabsize=2,
+% 	morekeywords={abstract,case,catch,class,def,do,else,extends,%
+%           false,final,finally,for,forSome,if,implicit,import,lazy,%
+%           match,new,null,object,override,package,private,protected,%
+%           return,sealed,super,this,throw,trait,true,try,type,%
+%           val,var,while,with,yield,
+%           map,filter,flatmap,sample,groupByKey,reduceByKey,
+%           union,join,cogroup,crossProduct,mapValues,sort,partitionBy,
+%           count,collect,reduce,lookup,save},
+% 	otherkeywords={=>,<-,<\%,<:,>:,\#,@}
+% }
 
 % could use \relsize{-2} instead of \scriptsize below
 \newcommand{\FIGCODEFONT}{\relsize{-1}\ttfamily}

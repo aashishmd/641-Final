@@ -1,0 +1,85 @@
+\section{Approach}
+\subsection{Core Language}
+% \begin{frame}
+% \tiny{
+%   K ::= <G, M, Q, S, $L_V$, $L_E$, $\Sigma$> $\hspace{23mm}$ Global Configurations \\
+%   $\Sigma$ ::= $\bullet$ \ | $\Sigma$ ; <id, v, h>  $\hspace{30mm}$ Local Configurations \\
+%   h ::= \{ true, false\}\\
+%   I ::= \{$V_k \mapsto$ id \}\\
+%   \ \\
+%   M ::= \{id $\mapsto$ m\} \\
+%   $m$ ::= $\bullet$ | e.$m$\\
+%   S ::= \{$v_k$ $\mapsto$ \{true, false\}\}\\
+%   Q ::= $\bullet$ | e.Q \\
+%   \ \\
+%   $v \  \in V$ \ \  set of vertices\\
+%   $e \ \in E$ \ \ set of edges \\
+%   id $\in \mathfrak{N}$ \ \ set of vertex identifiers\\
+%   k \ $\in \mathfrak{K}$ \ \ \ is finite
+% }
+% \end{frame}
+
+\begin{frame}
+  \begin{tiny}
+  \begin{roman-grammar}
+    \textit{p} ::= $\overline{e}$  \>\>\>\>\> Program \\
+\ \\
+  e ::= \>\>\>\>\> Expression \\
+  \ttab | x \>\>\>\>\> Variable \\
+  \ttab | v  \>\>\>\>\> Value \\
+  \ttab | x\textbf{:=} e \>\>\>\>\> Assignment \\
+  \ttab | \textbf{(}e e\textbf{)} \>\>\>\>\> Pair \\
+  \ttab | $\lambda$x.e \>\>\>\>\> Lambda \\
+  \ttab | e e \>\>\>\>\> Application \\
+  \ttab |  \textbf{if} x \textbf{then} e \textbf{else} e \>\>\>\>\> Conditional \\
+  \ttab |  \textbf{vInsert} e e \>\>\>\>\> Vertex Insert \\
+  \ttab |  \textbf{vRemove} e  \>\>\>\>\> Vertex Remove \\
+  \ttab |  \textbf{eInsert} e e e  \>\>\>\>\> Edge Insert \\
+  \ttab |  \textbf{eRemove} e e \>\>\>\>\> Edge Remove \\
+  \ttab |  \textbf{sync} \>\>\>\>\> Superstep barrier synchronization\\
+  \ttab |  \textbf{send} x e \>\>\>\>\> Send message\\
+  \ttab |  \textbf{halt} \>\>\>\>\> Vote to Halt \\
+  \ttab |  e\ op\ e \>\>\>\>\> Arithmetic Expressions \\  
+\ \\
+  op $\in$ \{+, -, $\times$ \} \>\>\>\>  Arithmetic operations \\
+\ \\    
+  v ::= \>\>  Value \\
+    \ttab | (v, v) \>\>\>\>  Pair value \\
+    \ttab | i \>\>\>\>  Integer value\\
+    \ttab | b \>\>\>\>  Boolean value\\
+    \ttab | (x:T) $\Rightarrow$ e \>\>\>\>  Function value\\
+    
+
+\end{roman-grammar}
+\end{tiny}    
+\end{frame}
+
+\begin{frame}
+  \begin{tiny}
+  \begin{roman-grammar}
+  
+  
+  T ::= \>\>\>\>\> Type \\
+    \ttab | \textbf{V}(\textbf{T}) \>\>\>\>\> Vertex Type \\
+    \ttab | \textbf{E}(\textbf{V(T)}, \textbf{V(T),}\textbf{T}) \>\>\>\>\> Edge Type\\
+    \ttab | $\textbf{T} \Rightarrow \textbf{T}$ \>\>\>\>\> Arrow type \\
+    \ttab | ($\textbf{T}, \textbf{T}$) \>\>\>\>\> Pair Type \\
+    \ttab | \textbf{Int} \>\>\>\>\> Integer Type \\
+    \ttab | \textbf{Bool} \>\>\>\>\> Boolean Type\\ 
+\ \\
+\newline
+\newline
+
+  \textbf{Type judgement for expressions:}
+  \\ \ \\
+  $\Gamma, \ \Lambda \ \vdash \ e \ : \ T, \ \Lambda$ \ \ \  where \\ \ \\
+  $\Gamma \ ::= {\{ I \ : \ T_I \}}_{I \in K}$ \>\>\>\> Type environment\\ \ \\
+  \ \ \ \ \ \ \ \ where K is finite \\
+  \ \\ $\Lambda \ ::= \ \phi \ | \Lambda; x=\psi;$  \>\>\>\> Dependence\ environment
+  \ \\ $\psi \ ::= \ \psi ;x\ | v$ \>\>\>\> Mutation\ dependence\ type\\
+  \ \\ $\Delta \ ::= \emptyset | \Delta; (\psi, KIND);$ \>\>\>\> Mutation\ environemnt\\
+  KIND $\in \{vInsert, vRemove, eInsert\}$ \>\>\>\>  Arithmetic operations 
+
+\end{roman-grammar}
+\end{tiny}  
+\end{frame}

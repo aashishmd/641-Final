@@ -1,3 +1,4 @@
+\subsection{Semantics}
 \begin{frame}
 
 %\begin{minipage}[ht]{0.5\textwidth}
@@ -58,7 +59,7 @@ $(m = vRemove v \wedge (\exists m' \in Q, m' = eInsert (v, v', t) \wedge (v''=v'
 $)$ 
 
 Disjoint checks for conflictions of the given mutation expression against the existing expressions in the mutation queue.
-Vertices with higher priority has priority over mutations on conflicting vertices or edges
+Vertices with a lower id has priority over mutations on conflicting vertices or edges.
 \end{tiny}
 \end{frame}
 
