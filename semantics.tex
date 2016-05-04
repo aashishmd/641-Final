@@ -47,6 +47,7 @@ of Q such that mutations in Q' is ordered in the order of eInserts, vInserts, vR
 \end{small}
 
 \end{frame}
+
 \begin{frame}
 \begin{tiny}
 Definition of disjoint(m, Q): 
@@ -65,127 +66,127 @@ Vertices with a lower id has priority over mutations on conflicting vertices or 
 
 \begin{frame}
 \begin{tiny}
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(Sync)}]
+\begin{mathpar}
+\mprset{flushleft}
+\inferrule[\tiny {(Sync)}]
 {\Sigma ' = next(S, id)}
-{<G, M, Q, S, \Sigma <\mathscr{E}[sync].E, id>> \ \ \reducesto \ \ <G, M, Q, S, \Sigma '>}$$
+{<G, M, Q, S, \Sigma <\mathscr{E}[sync].E, id>> \ \ \reducesto \ \ <G, M, Q, S, \Sigma '>}
 
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(Halt)}]
+\inferrule[\tiny {(Halt)}]
 {S'(id) = false, \Sigma ' = next(S, id)}
-{<G, M, Q, S, \Sigma <\mathscr{E}[halt].E, id>> \ \ \reducesto \ \ <G, M, Q, S', \Sigma '>}$$
+{<G, M, Q, S, \Sigma <\mathscr{E}[halt].E, id>> \ \ \reducesto \ \ <G, M, Q, S', \Sigma '>}
 
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(Send)}]
+\inferrule[\tiny {(Send)}]
 {M' \in M(x).e}
-{<G, M, Q, S, \Sigma <\mathscr{E}[send\ x\ e].E, id>> \ \ \reducesto \ \ <G, M', Q, S, \Sigma<E, id>>}$$
+{<G, M, Q, S, \Sigma <\mathscr{E}[send\ x\ e].E, id>> \ \ \reducesto \ \ <G, M', Q, S, \Sigma<E, id>>}
+
+\end{mathpar}
 \end{tiny}
 \end{frame}
 
 \begin{frame}
+
 \begin{tiny}
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(VInsert)}]
+\begin{mathpar}
+\mprset{flushleft}
+\inferrule[\tiny {(VInsert)}]
 {
 disjoint(vInsert\ e, Q)\\
 Q'=pOrder(Q.(vInsert\ e))
 }
-{<G, M, Q, S, \Sigma <\mathscr{E}[vInsert\ e].E, id>> \ \ \reducesto \ \ <G, M, Q, S, \Sigma <E, id>>}$$
+{<G, M, Q, S, \Sigma <\mathscr{E}[vInsert\ e].E, id>> \ \ \reducesto \ \ <G, M, Q, S, \Sigma <E, id>>}
 
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(VRemove)}]
+\inferrule[\tiny {(VRemove)}]
 {
 Q'=pOrder(Q.(vInsert\ e))
 }
-{<G, M, Q, S, \Sigma <\mathscr{E}[vRemove\ e].E, id>> \ \ \reducesto \ \ <G, M, Q, S, \Sigma <E, id>>}$$
+{<G, M, Q, S, \Sigma <\mathscr{E}[vRemove\ e].E, id>> \ \ \reducesto \ \ <G, M, Q, S, \Sigma <E, id>>}
 
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(eInsert)}]
+\inferrule[\tiny {(eInsert)}]
 {
 disjoint(eInsert\ e_1 e_2, Q)\\
 Q'=pOrder(Q.(eInsert\ e_1 e_2))
 }
-{<G, M, Q, S,\Sigma <\mathscr{E}[eInsert\ e_1 e_2].E, id>> \ \ \reducesto \ \ <G, M, Q, S, \Sigma <E, id>>}$$
+{<G, M, Q, S,\Sigma <\mathscr{E}[eInsert\ e_1 e_2].E, id>> \ \ \reducesto \ \ <G, M, Q, S, \Sigma <E, id>>}
 
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(eInsert)}]
+\mprset{flushleft}
+\inferrule[\tiny {(eInsert)}]
 {
 disjoint(eRemove\ e_1 e_2, Q)\\
 Q'=pOrder(Q.(eRemove\ e_1 e_2))
 }
-{<G, M, Q, S, \Sigma <\mathscr{E}[eRemove\ e_1 e_2].E, id>> \ \ \reducesto \ \ <G, M, Q, S, \Sigma <E, id>>}$$
-
+{<G, M, Q, S, \Sigma <\mathscr{E}[eRemove\ e_1 e_2].E, id>> \ \ \reducesto \ \ <G, M, Q, S, \Sigma <E, id>>}
+\end{mathpar}
 \end{tiny}
 \end{frame}
 
 \begin{frame}
+Global syncronization and mutation:
 \begin{tiny}
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(Global\_Sync)}]
+\begin{mathpar}
+\mprset{flushleft}
+\inferrule[\tiny {(Global Sync)}]
 {
 Q=\emptyset \\
 S'(id) = (M(id)\neq \emptyset) \\
 \Sigma=next(S', id)
 }
-{<G, M, Q, S, \bullet > \ \ \reducesto \ \ <G, M, Q, S', \Sigma>}$$
+{<G, M, Q, S, \bullet > \ \ \reducesto \ \ <G, M, Q, S', \Sigma>}
 
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(Global\_vInsert)}]
+\inferrule[\tiny {(Global vInsert)}]
 {
 v \notin V \\
 V' = V \cup v
 }
-{<<V, E>, M, \mathscr{E}[vInsert\ v].Q, S, \bullet > \ \ \reducesto \ \ <<V', E>, M, Q, S, \bullet >}$$
+{<<V, E>, M, \mathscr{E}[vInsert\ v].Q, S, \bullet > \ \ \reducesto \ \ <<V', E>, M, Q, S, \bullet >}
 
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(Global\_vRemove)}]
+\inferrule[\tiny {(Global vRemove)}]
 {
 v \in V \\
 V' = V / v
 E' = E/{e \in E, e=(v_j, v_k), v_j=v \vee v_k=v}
 }
-{<<V, E>, M, \mathscr{E}[vRemove\ v].Q, S, \bullet > \ \ \reducesto \ \ <<V', E'>, M, Q, S, \bullet >}$$
+{<<V, E>, M, \mathscr{E}[vRemove\ v].Q, S, \bullet > \ \ \reducesto \ \ <<V', E'>, M, Q, S, \bullet >}
 
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(Global\_eInsert)}]
+\inferrule[\tiny {(Global eInsert)}]
 {
 E' = E \cup e_1
 }
-{<<V, E>, M, \mathscr{E}[eInsert\ e_1 e_2].Q, S, \bullet > \ \ \reducesto \ \ <<V, E'>, M, Q, S, \bullet >}$$
+{<<V, E>, M, \mathscr{E}[eInsert\ e_1 e_2].Q, S, \bullet > \ \ \reducesto \ \ <<V, E'>, M, Q, S, \bullet >}
 
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(Global\_eRemove)}]
+\inferrule[\tiny {(Global eRemove)}]
 {
 e_1 \in E \\
 E' = E / e_1
 }
-{<<V, E>, M, \mathscr{E}[eRemove\ e_1 e_2].Q, S, \bullet > \ \ \reducesto \ \ <<V, E'>, M, Q, S, \bullet >}$$
+{<<V, E>, M, \mathscr{E}[eRemove\ e_1 e_2].Q, S, \bullet > \ \ \reducesto \ \ <<V, E'>, M, Q, S, \bullet >}
+\end{mathpar}
 \end{tiny}
 \end{frame}
 
 
 \begin{frame}
-\begin{tiny}
 Standard operations:
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(application)}]
+\begin{tiny}
+\begin{mathpar}
+\mprset{flushleft}
+\inferrule[\tiny {(application)}]
 {
 e' = [e_2/x]e
 }
-{<G, M, Q, S, \Sigma <\mathscr{E}[\lambda\ x\ e_1\ e_2].E, id> > \ \ \reducesto \ \ <G, M, Q, S, \Sigma <\mathscr{E}[e'].E, id> >}$$
+{<G, M, Q, S, \Sigma <\mathscr{E}[\lambda\ x\ e_1\ e_2].E, id> > \ \ \reducesto \ \ <G, M, Q, S, \Sigma <\mathscr{E}[e'].E, id> >}
 
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(if\_true)}]
+\inferrule[\tiny {(if\_true)}]
 {
 x=true
 }
-{<G, M, Q, S, \Sigma <\mathscr{E}[if\ x\ then\ e_1\ else\ e_2].E, id> > \ \ \reducesto \ \ <G, M, Q, S, \Sigma <\mathscr{E}[e1].E, id> >}$$
+{<G, M, Q, S, \Sigma <\mathscr{E}[if\ x\ then\ e_1\ else\ e_2].E, id> > \ \ \reducesto \ \ <G, M, Q, S, \Sigma <\mathscr{E}[e1].E, id> >}
 
-$$\mprset{flushleft}
-\inferrule[\scriptsize {(if\_false)}]
+\inferrule[\tiny {(if\_false)}]
 {
 x=false
 }
-{<G, M, Q, S, \Sigma <\mathscr{E}[if\ x\ then\ e_1\ else\ e_2].E, id> > \ \ \reducesto \ \ <G, M, Q, S, \Sigma <\mathscr{E}[e2].E, id> >}$$
+{<G, M, Q, S, \Sigma <\mathscr{E}[if\ x\ then\ e_1\ else\ e_2].E, id> > \ \ \reducesto \ \ <G, M, Q, S, \Sigma <\mathscr{E}[e2].E, id> >}
+\end{mathpar}
 \end{tiny}
 \end{frame}
