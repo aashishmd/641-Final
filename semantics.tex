@@ -136,7 +136,7 @@ Q'=pOrder(Q.(eInsert\ e_1 e_2))
 {<G, M, Q, S,\Sigma <\mathscr{E}[eInsert\ e_1 e_2].E, id>> \ \ \reducesto \ \ <G, M, Q, S, \Sigma <E, id>>}
 
 \mprset{flushleft}
-\inferrule[\tiny {(eInsert)}]
+\inferrule[\tiny {(eRemove)}]
 {
 disjoint(eRemove\ e_1 e_2, Q)\\
 Q'=pOrder(Q.(eRemove\ e_1 e_2))
@@ -147,7 +147,7 @@ Q'=pOrder(Q.(eRemove\ e_1 e_2))
 \end{frame}
 
 \begin{frame}
-Global syncronization and mutation:
+Global synchronization and mutation:
 \begin{tiny}
 \begin{mathpar}
 \mprset{flushleft}
@@ -169,8 +169,8 @@ V' = V \cup v
 \inferrule[\tiny {(Global vRemove)}]
 {
 v \in V \\
-V' = V / v
-E' = E/{e \in E, e=(v_j, v_k), v_j=v \vee v_k=v}
+V' = V / v \\
+E' = E/{e \in E,~e=(v_j, v_k),~v_j=v \vee v_k=v}
 }
 {<<V, E>, M, \mathscr{E}[vRemove\ v].Q, S, \bullet > \ \ \reducesto \ \ <<V', E'>, M, Q, S, \bullet >}
 
