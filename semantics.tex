@@ -66,9 +66,9 @@ $
 $disjoint(m, Q) = \neg($\\
 $(m = \textbf{vInsert}~v~\wedge \exists m' \in Q,~m' = \textbf{vInsert}~v'~\wedge~(v=v')$\\
 $\vee $\\
-$(m = \textbf{eInsert} (v,~v',~t)~\wedge (\exists m' \in Q,~m' = \textbf{vRemove}~v'')~\wedge~(v''=v'\vee v'' = v))$\\
+$(m = \textbf{eInsert} (v,~v',~t)~\wedge (\exists m' \in Q,~m' = \textbf{vRemove}~v''~\wedge~(v''=v'\vee v'' = v)))$\\
 $\vee $\\
-$(m = \textbf{vRemove}~v~\wedge (\exists m' \in Q,~m' = \textbf{eInsert} (v,~v',~t))~\wedge~(v''=v'\vee v'' = v))$\\
+$(m = \textbf{vRemove}~v~\wedge (\exists m' \in Q,~m' = \textbf{eInsert} (v,~v',~t)~\wedge~(v''=v'\vee v'' = v)))$\\
 $)$
 
 
