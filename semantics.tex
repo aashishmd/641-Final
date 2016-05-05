@@ -36,6 +36,60 @@ Domains:
 \end{frame}
 
 \begin{frame}
+Auxiliary functions \emph{next}, \emph{pOrder} and \emph{disjoint}~:
+\begin{tiny}
+\begin{figure}
+\begin{center}
+\[
+    next(S, id)= 
+\begin{cases}
+    \Sigma(id), & \text{if } id \mapsto true \in S\\
+    \bullet,              & \text{otherwise}\\
+\end{cases}
+\]
+
+$\begin{array}{@{}l@{~}l@{\quad}l@{\!\!\!\!\!\!}r}
+ pOrder(Q) = Q^{'}, where~Q \notin \varnothing
+\end{array}
+$
+$\begin{array}{@{}l@{~}l@{\quad}l@{\!\!\!\!\!\!}r}
+and~all~mutations~in~Q^{'}~are~ordered~such~that~eRemove \prec vRemove \prec vInsert \prec eInsert\\ 
+\end{array}
+$
+
+$\begin{array}{@{}l@{~}l@{\quad}l@{\!\!\!\!\!\!}r}
+\\
+\\
+\\
+\end{array}
+$
+$disjoint(m, Q) = \neg($\\
+$(m = \textbf{vInsert}~v~\wedge \exists m' \in Q,~m' = \textbf{vInsert}~v'~\wedge~(v=v')$\\
+$\vee $\\
+$(m = \textbf{eInsert} (v,~v',~t)~\wedge (\exists m' \in Q,~m' = \textbf{vRemove}~v'')~\wedge~(v''=v'\vee v'' = v))$\\
+$\vee $\\
+$(m = \textbf{vRemove}~v~\wedge (\exists m' \in Q,~m' = \textbf{eInsert} (v,~v',~t))~\wedge~(v''=v'\vee v'' = v))$\\
+$)$
+
+
+\end{center}
+%\caption{Auxiliary functions \emph{next}, \emph{pOrder} and \emph{disjoint}.}
+\label{fig-auxFunc}
+\end{figure}
+\end{tiny}
+\end{frame}
+
+\begin{frame}
+\begin{small}
+\textbf{next(S, id):} Given a list of vertices S, and a vertex identifier id, next(S, id) returns the local configuration of the next active vertex. If there is no next active vertex, $\bullet$ is returned.\\ 
+\ \\
+\textbf{pOrder(Q):} Given a list of mutation expressions Q, pOrder(Q) returns Q' where Q' is the partial-ordered list of Q such that mutations in Q' is ordered in the order of eRemove, vRemove, vInsert, eInsert.\\
+\ \\
+\textbf{disjoint(m, Q):} Disjoint checks for possiblity of conflicts of the given mutation expression against the existing expressions in the mutation queue. Vertices with a lower id has priority over mutations on conflicting vertices or edges.
+\end{small}
+\end{frame}
+
+\begin{frame}
 \begin{small}
 Definition of next(S, id) and pOrder(Q):\\
 \ \\
