@@ -25,7 +25,7 @@
     \textit{p} ::= $\overline{e}$  \>\>\>\>\> Program \\
 \ \\
   e ::= \>\>\>\>\> Expression \\
-  \ttab | x \>\>\>\>\> Variable \\
+  \ttab \ x \>\>\>\>\> Variable \\
   \ttab | v  \>\>\>\>\> Value \\
   \ttab | x\textbf{:=} e \>\>\>\>\> Assignment \\
   \ttab | \textbf{(}e e\textbf{)} \>\>\>\>\> Pair \\
@@ -45,7 +45,7 @@
   op $\in$ \{+, -, $\times$ \} \>\>\>\>  Arithmetic operations \\
 \ \\    
   v ::= \>\>  Value \\
-    \ttab | (v, v) \>\>\>\>  Pair value \\
+    \ttab \ (v, v) \>\>\>\>  Pair value \\
     \ttab | i \>\>\>\>  Integer value\\
     \ttab | b \>\>\>\>  Boolean value\\
     \ttab | (x:T) $\Rightarrow$ e \>\>\>\>  Function value\\
@@ -61,7 +61,7 @@
   
   
   T ::= \>\>\>\>\> Type \\
-    \ttab | \textbf{V}(\textbf{T}) \>\>\>\>\> Vertex Type \\
+    \ttab \ \textbf{V}(\textbf{T}) \>\>\>\>\> Vertex Type \\
     \ttab | \textbf{E}(\textbf{V(T)}, \textbf{V(T),}\textbf{T}) \>\>\>\>\> Edge Type\\
     \ttab | $\textbf{T} \Rightarrow \textbf{T}$ \>\>\>\>\> Arrow type \\
     \ttab | ($\textbf{T}, \textbf{T}$) \>\>\>\>\> Pair Type \\
@@ -78,7 +78,7 @@
   \ \ \ \ \ \ \ \ where K is finite \\
   \ \\ $\Lambda ::= {\{ x: \psi_I \}}_{I \in K}$  \>\>\>\> Dependence\ environment
   \ \\ $\psi \ ::= \ \psi ;x\ | v$ \>\>\>\> Mutation\ dependence\ type\\
-  \ \\ $\Delta \ ::= \emptyset | \Delta; (\psi, KIND);$ \>\>\>\> Mutation\ environemnt\\
+  \ \\ $\Delta \ ::= \emptyset | \Delta; (\psi, KIND);$ \>\>\>\> Mutation\ environment\\
   KIND $\in \{vInsert, vRemove, eInsert\}$ \>\>\>\>  Mutation kinds 
 
 \end{roman-grammar}
