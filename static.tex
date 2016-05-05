@@ -148,9 +148,9 @@ Mutation expressions typing rule:
     
 \inferrule[\tiny {(Edge Insert)}]
     {
-    \Gamma e_1 : Int\\
-    \Gamma e_2 : Int\\
-    \Gamma e_3 : T\\ 
+    \Gamma \vdash e_1 : Int\\
+    \Gamma \vdash e_2 : Int\\
+    \Gamma \vdash e_3 : T\\ 
     \Lambda \vdash e_1 : \psi_1\\
     \Lambda \vdash e_2 : \psi_2\\
     \psi_1 \# \Delta\\
@@ -161,8 +161,8 @@ Mutation expressions typing rule:
 
 \inferrule[\tiny {(Edge Remove)}]
     {
-    \Gamma e_1 : Int\\
-    \Gamma e_2 : Int\\
+    \Gamma \vdash e_1 : Int\\
+    \Gamma \vdash e_2 : Int\\
     }
     {\Gamma, \Lambda, \Delta \vdash eRemove\ e_1\ e_2 : Bool, \Lambda, \Delta}
         
