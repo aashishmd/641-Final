@@ -1,4 +1,25 @@
 
+\begin{frame}
+\begin{itemize}
+  \item Intuition: 
+  \begin{itemize}
+    \item Variables are the same value for every vertex
+    \item Unless they depend on values that differ for vertices
+    \item Vertex id, vertex values, edges list and edge values
+   \end{itemize} 
+  \item Variables are marked with dependencies
+  \item Our current type system only keeps track of the dependency of variables,
+  and assume the value are the same if the dependency set is the same. Future
+  work is needed to keep track of the dependency relationship to increase the
+  precision.
+  \item Potential conflicts:
+  \begin{itemize}
+    \item Vertex insert and vertex insert
+    \item Vertex remove and edge insert
+  \end{itemize}  	
+\end{itemize}
+\end{frame}
+
 \subsection{Mutation Dependency Disjoint Check}
 \begin{frame}
 Disjoint check rules\\
@@ -7,17 +28,17 @@ Disjoint check rules\\
 The rules for the check of the disjointness of mutation dependent type against the mutation environment is shown below:
 \begin{mathpar}
 \mprset{flushleft}
-\inferrule[\tiny {(Unknown)}]
-    {
-    \psi \neq v
-    }
-    {(\psi , KIND)\ \# \Delta }
+% \inferrule[\tiny {(Unknown)}]
+%     {
+%     \psi \neq \bullet
+%     }
+%     {(\psi , KIND)\ \# \Delta }
 
 \inferrule[\tiny {(Safe)}]
     {
-    (KIND=vInsert, \nexists (\psi', vInsert) \in \Delta, \psi=\psi') \vee\ \\\\
-    (KIND=eInsert, \nexists (\psi', vRemove) \in \Delta, \psi=\psi') \vee\ \\\\
-    (KIND=vRemove, \nexists (\psi', eInsert) \in \Delta, \psi=\psi')
+    (KIND=vInsert\wedge (\nexists (\psi', vInsert) \in \Delta, \psi=\psi')\wedge \psi\neq \bullet ) \vee\ \\\\
+    (KIND=eInsert\wedge \nexists (\psi', vRemove) \in \Delta, \psi=\psi') \vee\ \\\\
+    (KIND=vRemove\wedge \nexists (\psi', eInsert) \in \Delta, \psi=\psi')
     }
     {(\psi , KIND)\ \# \Delta }
     
@@ -36,7 +57,8 @@ Standard typing rules:
 
 \inferrule[\tiny {(Variable)}]
     {
-    \Gamma \vdash x=T 
+    \Gamma \vdash x:T\\
+    \Lambda' \vdash x:x
     }
     {\Gamma, \Lambda, \Delta \vdash x:T, \Lambda, \Delta}
 
