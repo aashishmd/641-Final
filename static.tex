@@ -38,11 +38,11 @@ Standard typing rules:
     {
     \Gamma \vdash x=T 
     }
-    {\Gamma, \Lambda \vdash x:T, \Lambda}
+    {\Gamma, \Lambda, \Delta \vdash x:T, \Lambda, \Delta}
 
 \inferrule[\tiny {(Value)}]
     {\ \ }
-    {\Gamma, \Lambda  \vdash v:T, \Lambda}
+    {\Gamma, \Lambda, \Delta \vdash v:T, \Lambda, \Delta}
 
 \inferrule[\tiny {(Assignment\_Int)}]
     {
@@ -52,39 +52,39 @@ Standard typing rules:
      \Lambda' \vdash  x:\psi
      }
     {
-    	\Gamma, \Lambda \vdash x:=e : T, \Lambda '
+    	\Gamma, \Lambda, \Delta \vdash x:=e : T, \Lambda ', \Delta
     }
     
 \inferrule[\tiny {(Conditional)}]
     {
      \Gamma \vdash e_1 : Bool\\
-     \Gamma, \Lambda \vdash e_2 :T, \Lambda '\\
-     \Gamma, \Lambda \vdash e_3 :T, \Lambda ''\\
+     \Gamma, \Lambda, \Delta \vdash e_2 :T, \Lambda ', \Delta\\
+     \Gamma, \Lambda, \Delta \vdash e_3 :T, \Lambda '', \Delta\\
   	 \Lambda ''' = \Lambda ' \uplus \Lambda ''
     }
-    {\Gamma, \Lambda \vdash if\ e_1 \ then\ e_2 \ else\ e_3 :T, \Lambda '''}
+    {\Gamma, \Lambda, \Delta \vdash if\ e_1 \ then\ e_2 \ else\ e_3 :T, \Lambda ''', \Delta}
 
 	\inferrule[\tiny {(While)}]
     {
      \Gamma \vdash e_1:Bool\\
-     \Gamma, \Lambda \vdash e_2:T, \Lambda'
+     \Gamma, \Lambda, \Delta\vdash e_2:T, \Lambda', \Delta
     }
-    {\Gamma, \Lambda \vdash while\ e_1\ e_2:T,\Lambda'}
+    {\Gamma, \Lambda, \Delta \vdash while\ e_1\ e_2:T,\Lambda', \Delta}
 
 
 	\inferrule[\tiny {(Lambda)}]
     {
      \Gamma \vdash x: T_1\\
      \Gamma[x/T_1] \vdash e: T_2}
-    {\Gamma, \Lambda \vdash \lambda x.e: T_1 \rightarrow T_2, \Lambda}
+    {\Gamma, \Lambda, \Delta \vdash \lambda x.e: T_1 \rightarrow T_2, \Lambda, \Delta}
     
     \inferrule[\tiny {(Application)}]
     {
      \Gamma \vdash e_1 : T_1 \rightarrow T_2\\
-     \Gamma, \Lambda \vdash e_2 : T_1, \Lambda'\\
-     \Gamma, \Lambda' \vdash e_1 : T_1, \Lambda''
+     \Gamma, \Lambda, \Delta \vdash e_2 : T_1, \Lambda', \Delta\\
+     \Gamma, \Lambda', \Delta \vdash e_1 : T_1, \Lambda'', \Delta
      }
-    {\Gamma, \Lambda \vdash e_1 \ e_2 : T_2 , \Lambda''}
+    {\Gamma, \Lambda, \Delta \vdash e_1 \ e_2 : T_2 , \Lambda'', \Delta}
     
     \inferrule[\tiny {(Operation)}]
     {
@@ -94,7 +94,7 @@ Standard typing rules:
      \Lambda \vdash e_1 : \psi_2\\
      \Lambda' = \Lambda \uplus \psi_1 \uplus \psi_2
      }
-    {\Gamma, \Lambda \vdash e_1 op e_2 : T, \Lambda'}
+    {\Gamma, \Lambda, \Delta \vdash e_1 op e_2 : T, \Lambda', \Delta}
     
 \end{mathpar}
 \end{tiny}
@@ -142,19 +142,19 @@ Mutation expressions typing rule:
     \Gamma e_1 : Int\\
     \Gamma e_2 : Int\\
     }
-    {\Gamma, \Lambda \vdash eRemove\ e_1\ e_2 : Bool, \Lambda}
+    {\Gamma, \Lambda, \Delta \vdash eRemove\ e_1\ e_2 : Bool, \Lambda, \Delta}
         
     \inferrule[\tiny {(Sync)}]
     {\ \ }
-    {\Gamma, \Lambda \vdash sync : T, \Lambda}
+    {\Gamma, \Lambda, \Delta \vdash sync : T, \Lambda, \Delta}
     
     \inferrule[\tiny {(Halt)}]
     {\ \ }
-    {\Gamma, \Lambda \vdash halt : T, \Lambda}
+    {\Gamma, \Lambda, \Delta \vdash halt : T, \Lambda, \Delta}
     
     \inferrule[\tiny {(Send Message)}]
     {\Gamma \vdash e_1 :Int}
-    {\Gamma, \Lambda \vdash send\ e_1\ e_2 : Bool, \Lambda}
+    {\Gamma, \Lambda, \Delta \vdash send\ e_1\ e_2 : Bool, \Lambda, \Delta}
     
 \end{mathpar}
 \end{tiny}

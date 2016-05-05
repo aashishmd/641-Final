@@ -6,7 +6,7 @@
 Evaluation Contexts:\\
 
 $\mathscr{E}$ \: $\hole$ | $x:=\mathscr{E}$ | if $x$ then $\mathscr{E}$ else e | if $x$ then e else $\mathscr{E}$ |  
-vInsert $\mathscr{E}$ | vRemove $\mathscr{E}$ | eInsert $\mathscr{E}$ | eRemove $\mathscr{E}$ |
+while $\mathscr{E}$ e | vInsert $\mathscr{E}$ | vRemove $\mathscr{E}$ | eInsert $\mathscr{E}$ | eRemove $\mathscr{E}$ |
 send x $\mathscr{E}$\\
 \ \\
 
@@ -52,11 +52,11 @@ of Q such that mutations in Q' is ordered in the order of eInserts, vInserts, vR
 \begin{tiny}
 Definition of disjoint(m, Q): 
 $disjoint(m, Q) = \neg($\\
-$(m = vInsert v \wedge \exists m' \in Q, m' = vInsert\ v'\wedge v=v')$\\
+$(m = vInsert\ v \wedge \exists m' \in Q, (m' = vInsert\ v'\wedge v=v'))$\\
 $\vee $\\
-$(m = eInsert (v, v', t) \wedge (\exists m' \in Q, m' = vRemove\ v'' \wedge (v''=v'\vee v'' = v)))$\\
+$(m = eInsert\ (v, v', t) \wedge (\exists m' \in Q, m' = vRemove\ v'' \wedge (v''=v'\vee v'' = v)))$\\
 $\vee $\\
-$(m = vRemove v \wedge (\exists m' \in Q, m' = eInsert (v, v', t) \wedge (v''=v'\vee v'' = v)))$\\
+$(m = vRemove\ v \wedge (\exists m' \in Q, m' = eInsert (v, v', t) \wedge (v''=v'\vee v'' = v)))$\\
 $)$ 
 
 Disjoint checks for conflictions of the given mutation expression against the existing expressions in the mutation queue.

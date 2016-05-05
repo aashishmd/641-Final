@@ -32,6 +32,7 @@
   \ttab | $\lambda$x.e \>\>\>\>\> Lambda \\
   \ttab | e e \>\>\>\>\> Application \\
   \ttab |  \textbf{if} x \textbf{then} e \textbf{else} e \>\>\>\>\> Conditional \\
+  \ttab |  \textbf{while} e e \>\>\>\>\> Loop \\
   \ttab |  \textbf{vInsert} e e \>\>\>\>\> Vertex Insert \\
   \ttab |  \textbf{vRemove} e  \>\>\>\>\> Vertex Remove \\
   \ttab |  \textbf{eInsert} e e e  \>\>\>\>\> Edge Insert \\
@@ -72,13 +73,13 @@
 
   \textbf{Type judgement for expressions:}
   \\ \ \\
-  $\Gamma, \ \Lambda \ \vdash \ e \ : \ T, \ \Lambda$ \ \ \  where \\ \ \\
-  $\Gamma \ ::= {\{ I \ : \ T_I \}}_{I \in K}$ \>\>\>\> Type environment\\ \ \\
+  $\Gamma, \Lambda, \Delta \vdash e : T, \Lambda, \Delta$ \ \ \  where \\ \ \\
+  $\Gamma ::= {\{ I : T_I \}}_{I \in K}$ \>\>\>\> Type environment\\ \ \\
   \ \ \ \ \ \ \ \ where K is finite \\
-  \ \\ $\Lambda \ ::= \ \phi \ | \Lambda; x=\psi;$  \>\>\>\> Dependence\ environment
+  \ \\ $\Lambda ::= {\{ x: \psi_I \}}_{I \in K}$  \>\>\>\> Dependence\ environment
   \ \\ $\psi \ ::= \ \psi ;x\ | v$ \>\>\>\> Mutation\ dependence\ type\\
   \ \\ $\Delta \ ::= \emptyset | \Delta; (\psi, KIND);$ \>\>\>\> Mutation\ environemnt\\
-  KIND $\in \{vInsert, vRemove, eInsert\}$ \>\>\>\>  Arithmetic operations 
+  KIND $\in \{vInsert, vRemove, eInsert\}$ \>\>\>\>  Mutation kinds 
 
 \end{roman-grammar}
 \end{tiny}  
